@@ -1,23 +1,13 @@
 #include "Window.h"
 #include "Utils.h"
 
-void framebufferSizeCallback(GLFWwindow *window, int width, int height);
-
-void mouseCallback(GLFWwindow *window, double xPos, double yPos);
-
-void scrollCallback(GLFWwindow *window, double xOffset, double yOffset);
-
-float deltaTime = 0;
-float lastFrame = 0;
-float mouseX = 0.0f, mouseY = 0.0f, deltaScrollY;
-
 enum ERRORS {
   NONE = 0x0000,
   FAIL_CREATE_WINDOW = 0x0001,
   FAIL_INIT_GLAD = 0x0010,
 };
 
-Window::Window() : cam(&getCamera()) {
+Window::Window() {
   errors = NONE;
 
   glfwConfiguration();
@@ -55,8 +45,8 @@ void Window::windowInicialization() {
   vidmode = glfwGetVideoMode(monitor);
 
   GLFWwindow *w = glfwCreateWindow(vidmode->width, vidmode->height, "LearnOpenGL", nullptr, nullptr);
+  glfwSetWindowUserPointer(w, this);
   window = w;
-
 
   if (window == nullptr) {
     Utils::logger("Failed to create GLFW window");
@@ -69,46 +59,47 @@ void Window::windowInicialization() {
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   glfwSetCursorPosCallback(window, mouseCallback);
-  glfwSetScrollCallback(window, scrollCallback);
 }
+
+void Window::initializeSystem(System* system) {
+  sys = system;
+}
+
 
 void Window::processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
   }
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-    cam->setFrontBack(deltaTime, front);
+    sys->getMainCam().setFrontBack(deltaTime, front);
   }
   if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-    cam->setFrontBack(deltaTime, back);
+    sys->getMainCam().setFrontBack(deltaTime, back);
   }
   if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-    cam->setLeftRight(deltaTime, left);
+    sys->getMainCam().setLeftRight(deltaTime, left);
   }
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-    cam->setLeftRight(deltaTime, right);
+    sys->getMainCam().setLeftRight(deltaTime, right);
   }
   if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-    cam->setUpDown(deltaTime, up);
+    sys->getMainCam().setUpDown(deltaTime, up);
   }
   if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-    cam->setUpDown(deltaTime, down);
+    sys->getMainCam().setUpDown(deltaTime, down);
   }
 }
 
-void Window::render(std::vector<Instances> &data) {
+void Window::render() {
   while (!glfwWindowShouldClose(window)) {
     calculateDeltaTime();
 
-    cam->update(mouseX, mouseY);
     processInput(window);
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for (int i = 0; i < data.size(); i++) {
-      data[i].drawInstances();
-    }
+    sys->process();
 
     glfwSwapBuffers(window);
 
@@ -122,17 +113,13 @@ int Window::hasErrors() {
   return (errors & (FAIL_CREATE_WINDOW | FAIL_INIT_GLAD)) > 0;
 }
 
-void framebufferSizeCallback(GLFWwindow *window, int width, int height) {
+void Window::framebufferSizeCallback(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
 }
 
-void mouseCallback(GLFWwindow *window, double xPos, double yPos) {
-  mouseX = xPos;
-  mouseY = yPos;
-}
-
-void scrollCallback(GLFWwindow *window, double xOffset, double yOffset) {
-  deltaScrollY = yOffset;
+void Window::mouseCallback(GLFWwindow *window, double xPos, double yPos) {
+  auto self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+  self->sys->getMainCam().update(xPos, yPos);
 }
 
 void Window::calculateDeltaTime() {
