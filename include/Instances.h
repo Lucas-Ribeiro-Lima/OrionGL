@@ -15,7 +15,7 @@ class Instances {
 public:
     Instances(std::unique_ptr<Model> obj);
 
-    void addInstance(const model_position &inst);
+    void addInstance(model_position inst);
 
     void deleteInstance(size_t index);
 

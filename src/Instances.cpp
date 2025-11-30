@@ -11,7 +11,7 @@ void Instances::drawInstances() {
     }
 }
 
-void Instances::addInstance(const model_position &inst) {
+void Instances::addInstance(model_position inst) {
     pos.push_back(std::move(inst));
 }
 
