@@ -1,17 +1,20 @@
 #include "Instances.h"
 
-Instances::Instances(std::unique_ptr<Model> obj, glm::vec3 pos): obj(std::move(obj)) {
-	Pos.push_back(pos);
+Instances::Instances(std::unique_ptr<Model> obj) : obj(std::move(obj)) {
 };
 
-void Instances::setInstances(std::vector<glm::vec3> pos) {
-	Pos = pos;
+void Instances::drawInstances() {
+    for (int i = 0; i < pos.size(); i++) {
+        (*obj)
+            .setTranslate(*pos[i])
+            .draw();
+    }
 }
 
-void Instances::drawInstances() {
-	for (int i = 0; i < Pos.size(); i++) {
-		(*obj)
-			.setTranslate(Pos[i])
-			.draw();
-	}
+void Instances::addInstance(const model_position &inst) {
+    pos.push_back(std::move(inst));
+}
+
+void Instances::deleteInstance(size_t index) {
+    pos.erase(pos.begin() + index);
 }

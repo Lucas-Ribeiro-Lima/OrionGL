@@ -20,9 +20,7 @@ public:
 class PlanetSystem : public System {
 private:
     std::vector<Instances> stars;
-    std::vector<glm::vec3> stars_position;
     std::vector<Instances> planets;
-    std::vector<glm::vec3> planets_position;
     Camera &cam1;
 
     void initSystem();

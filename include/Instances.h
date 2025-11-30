@@ -5,15 +5,19 @@
 
 #include "Model.h"
 
-class Instances
-{
-	std::unique_ptr<Model> obj;
-	std::vector<glm::vec3>  Pos{};
-public:
-	Instances(std::unique_ptr<Model>obj, glm::vec3 pos);
-	void setInstances(std::vector<glm::vec3> inst);
-	void addInstances(std::vector<glm::vec3> inst);
-	void deleteInstances(int index);
-	void drawInstances();
-};
+typedef  std::shared_ptr<glm::vec3> model_position;
+typedef  std::vector<model_position> instances_positions;
 
+class Instances {
+    std::unique_ptr<Model> obj;
+    instances_positions pos;
+
+public:
+    Instances(std::unique_ptr<Model> obj);
+
+    void addInstance(const model_position &inst);
+
+    void deleteInstance(size_t index);
+
+    void drawInstances();
+};
