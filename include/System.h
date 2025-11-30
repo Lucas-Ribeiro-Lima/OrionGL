@@ -11,18 +11,29 @@
 class System {
 public:
     virtual void process() = 0;
+
     virtual ~System() = default;
+
     virtual Camera &getMainCam() = 0;
 };
 
 class PlanetSystem : public System {
+private:
     std::vector<Instances> stars;
+    std::vector<glm::vec3> stars_position;
     std::vector<Instances> planets;
+    std::vector<glm::vec3> planets_position;
     Camera &cam1;
+
+    void initSystem();
+
 public:
     PlanetSystem();
+
     void process() override;
+
     ~PlanetSystem() override = default;
+
     Camera &getMainCam() override;
 };
 

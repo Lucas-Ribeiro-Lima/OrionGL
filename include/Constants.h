@@ -3,6 +3,7 @@
 
 namespace Constants
 {
+	inline constexpr auto CORPS_DATA = ASSETS_DIR "solar_system.json";
 	inline constexpr auto VSHADER_1 = SHADER_DIR "shader-1.glsl";
 	inline constexpr auto FRAG_1 = SHADER_DIR "frag-1.glsl";
 	inline constexpr auto FRAG_LIGHT = SHADER_DIR "frag-light.glsl";

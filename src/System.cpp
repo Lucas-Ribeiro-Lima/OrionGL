@@ -5,56 +5,72 @@
 #include <System.h>
 #include <Corp.h>
 #include <Config.h>
+#include <ResourceManager.h>
 
-#include "ResourceManager.h"
+#include <fstream>
+#include <nlohmann/json.hpp>
 
-std::vector<CorpData> planets_data{
-        {{ASSETS_DIR "mercury.jpg"}, 2.0f, 5.0f, 0.8f}, // Mercury
-        {{ASSETS_DIR "venus.jpg"}, 3.0f, 3.0f, 0.5f}, // Venus
-        {
-            {
-                ASSETS_DIR "earth.jpg",
-                ASSETS_DIR "earth_specular_map.tif",
-                ASSETS_DIR "earth_nightmap.jpg"
-            },
-            3.3f, 8.0f, 0.2f
-        }, // Earth
-        {{ASSETS_DIR "mars.jpg"}, 2.5f, 7.0f, 0.1f}, // Mars
-        {{ASSETS_DIR "jupiter.jpg"}, 12.0f, 12.0f, 0.3f}, // Jupiter
-        {{ASSETS_DIR "saturn.jpg"}, 10.0f, 10.0f, 0.4f}, // Saturn
-        {{ASSETS_DIR "uranus.jpg"}, 4.5f, 6.0f, 0.8f}, // Uranus
-        {{ASSETS_DIR "neptune.jpg"}, 4.0f, 5.0f, 0.1f}, // Neptune
-    };
-std::vector<glm::vec3> planets_positions{
-        {-30.0f, 0.0f, -30.0f}, {45.0f, 0.0f, 45.0f}, {-60.0f, 0.0f, -60.0f}, {75.0f, 0.0f, 75.0f},
-        {-110.0f, 0.0f, -110.0f}, {150.0f, 0.0f, 150.0f}, {-190.0f, 0.0f, -190.0f}, {230.0f, 0.0f, 230.0f}
-};
+using json = nlohmann::json;
+void from_json(const json &j, CorpData &c);
 
-std::vector<CorpData> stars_data{{{ASSETS_DIR "sun.jpg"}, 20.0f, 0.1f, 0.0f}};
-std::vector<glm::vec3> stars_positions{{0.0f, 0.0f, 0.0f}};
-
-PlanetSystem::PlanetSystem(): cam1(getCamera()) {
-    for (int i = 0; i < planets_data.size(); i++) {
-        std::unique_ptr<Model> planet_ptr = std::make_unique<Corp>(planets_data[i]);
-        planets.emplace_back(std::move(planet_ptr), planets_positions[i]);
-    }
-
-    for (int i = 0; i < stars_data.size(); i++) {
-        std::unique_ptr<Model> sun_ptr = std::make_unique<Corp>(stars_data[i], ShadersSrc{ Constants::VSHADER_1, Constants::FRAG_LIGHT });
-        stars.emplace_back(std::move(sun_ptr), stars_positions[i]);
-    }
+PlanetSystem::PlanetSystem() : cam1(getCamera()) {
+    initSystem();
 }
 
 void PlanetSystem::process() {
-    for (auto& star : stars) {
+    for (auto &star: stars) {
         star.drawInstances();
     }
 
-    for (auto& planet : planets) {
+    for (auto &planet: planets) {
         planet.drawInstances();
     }
 }
 
 Camera &PlanetSystem::getMainCam() {
     return cam1;
+}
+
+void PlanetSystem::initSystem() {
+    std::ifstream input_file{Constants::CORPS_DATA, std::ios::in};
+    json parsed_json = json::parse(input_file);
+
+    for (auto &planet_json: parsed_json.at("planets")) {
+        CorpData _planet_data = planet_json.get<CorpData>();
+        std::unique_ptr<Model> planet_ptr = std::make_unique<Corp>(_planet_data);
+
+        glm::vec3 _positions{ _planet_data.pos[0], _planet_data.pos[1], _planet_data.pos[2] };
+        planets_position.push_back(_positions);
+        planets.emplace_back(std::move(planet_ptr), _positions);
+    }
+
+    for (auto &star_json: parsed_json.at("stars")) {
+        CorpData _star_data = star_json.get<CorpData>();
+        std::unique_ptr<Model> star_ptr = std::make_unique<Corp>(_star_data, ShadersSrc{
+            Constants::VSHADER_1,
+            Constants::FRAG_LIGHT
+        });
+
+        glm::vec3 _positions{ _star_data.pos[0], _star_data.pos[1], _star_data.pos[2] };
+        stars_position.push_back(_positions);
+        stars.emplace_back(std::move(star_ptr), _positions);
+    }
+};
+
+
+ void from_json(const json &j, CorpData &c) {
+    c.rotationScaler = j.at("rotation_speed");
+    c.translationScaler = j.at("translation_speed");
+    c.radius = j.at("radius");
+
+    if (j.contains("textures") && j["textures"].is_array()) {
+        auto &tex = j["textures"];
+
+        if (tex.size() > 0) c.mat.diffusePath = ASSETS_DIR + tex[0].get<std::string>();
+        if (tex.size() > 1) c.mat.specularPath = ASSETS_DIR + tex[1].get<std::string>();
+        if (tex.size() > 2) c.mat.emissivePath = ASSETS_DIR + tex[2].get<std::string>();
+    }
+
+    if (j.at("position").size() != 3) throw std::runtime_error("Corrupted json file");
+    c.pos = j.at("position").get<std::array<float, 3>>();
 }

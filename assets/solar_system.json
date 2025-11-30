@@ -1,0 +1,83 @@
+{
+  "planets": [
+    {
+      "name": "mercury",
+      "textures": ["mercury.jpg"],
+      "radius": 2.0,
+      "rotation_speed": 5.0,
+      "translation_speed": 0.8,
+      "position": [-30.0, 0.0, -30.0]
+    },
+    {
+      "name": "venus",
+      "textures": ["venus.jpg"],
+      "radius": 3.0,
+      "rotation_speed": 3.0,
+      "translation_speed": 0.5,
+      "position": [45.0, 0.0, 45.0]
+    },
+    {
+      "name": "earth",
+      "textures": [
+        "earth.jpg",
+        "earth_specular_map.tif",
+        "earth_nightmap.jpg"
+      ],
+      "radius": 3.3,
+      "rotation_speed": 8.0,
+      "translation_speed": 0.2,
+      "position": [-60.0, 0.0, -60.0]
+    },
+    {
+      "name": "mars",
+      "textures": ["mars.jpg"],
+      "radius": 2.5,
+      "rotation_speed": 7.0,
+      "translation_speed": 0.1,
+      "position": [75.0, 0.0, 75.0]
+    },
+    {
+      "name": "jupiter",
+      "textures": ["jupiter.jpg"],
+      "radius": 12.0,
+      "rotation_speed": 12.0,
+      "translation_speed": 0.3,
+      "position": [-110.0, 0.0, -110.0]
+    },
+    {
+      "name": "saturn",
+      "textures": ["saturn.jpg"],
+      "radius": 10.0,
+      "rotation_speed": 10.0,
+      "translation_speed": 0.4,
+      "position": [150.0, 0.0, 150.0]
+    },
+    {
+      "name": "uranus",
+      "textures": ["uranus.jpg"],
+      "radius": 4.5,
+      "rotation_speed": 6.0,
+      "translation_speed": 0.8,
+      "position": [-190.0, 0.0, -190.0]
+    },
+    {
+      "name": "neptune",
+      "textures": ["neptune.jpg"],
+      "radius": 4.0,
+      "rotation_speed": 5.0,
+      "translation_speed": 0.1,
+      "position": [230.0, 0.0, 230.0]
+    }
+  ],
+
+  "stars": [
+    {
+      "name": "sun",
+      "textures": ["sun.jpg"],
+      "radius": 20.0,
+      "rotation_speed": 0.1,
+      "translation_speed": 0.0,
+      "position": [0.0, 0.0, 0.0]
+    }
+  ]
+}

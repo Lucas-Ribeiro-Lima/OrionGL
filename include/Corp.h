@@ -6,6 +6,7 @@ struct CorpData {
 	float radius;
 	float rotationScaler;
 	float translationScaler;
+	std::array<float, 3> pos;
 };
 
 struct ShadersSrc {

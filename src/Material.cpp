@@ -9,12 +9,14 @@
 
 Material::Material() : diffuse(getTextureData(Constants::TEXTURE_BLACK_FALLBACK)),
                        specular(getTextureData(Constants::TEXTURE_BLACK_FALLBACK)),
-                       emissive(getTextureData(Constants::TEXTURE_BLACK_FALLBACK)) {}
+                       emissive(getTextureData(Constants::TEXTURE_BLACK_FALLBACK)) {
+}
 
-Material::Material(MaterialData &mat) :
-    diffuse(getTextureData(mat.diffusePath)),
-    specular(getTextureData(mat.specularPath)),
-    emissive(getTextureData(mat.emissivePath)) {}
+Material::Material(MaterialData &mat) : m_data(std::move(mat)) {
+    diffuse = getTextureData(m_data.diffusePath.c_str());
+    specular = getTextureData(m_data.specularPath.c_str());
+    emissive = getTextureData(m_data.emissivePath.c_str());
+};
 
 void Material::bindMaterial() {
     glActiveTexture(GL_TEXTURE0);
