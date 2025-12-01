@@ -8,7 +8,7 @@ Corp::Corp(
 ) : Model(
         getSphereData(data.radius),
         getProgram(Constants::VSHADER_1, Constants::FRAG_1),
-        data.mat
+        getMaterial(data.mat)
     ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
 }
 
@@ -18,7 +18,7 @@ Corp::Corp(
 ) : Model(
         getSphereData(data.radius),
         getProgram(shaders_src.vertex, shaders_src.fragment),
-        data.mat
+        getMaterial(data.mat)
     ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
 }
 

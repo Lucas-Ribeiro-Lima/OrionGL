@@ -18,7 +18,7 @@ protected:
 
 	std::shared_ptr<Program> program = nullptr;
 	std::shared_ptr<Mesh> mesh = nullptr;
-	Material material{};
+	std::shared_ptr<Material> material = nullptr;
 
 	uint VAO = 0;
 	float rotateDeg = 0;
@@ -32,7 +32,7 @@ protected:
 
 public:
 	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> Program);
-	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> Program, MaterialData &material_data);
+	Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> Program, std::shared_ptr<Material> material_data);
 	uint getID() const;
 	Model& setProgram(std::shared_ptr<Program> prg);
 	Model& setTranslate(glm::vec3 axis);
