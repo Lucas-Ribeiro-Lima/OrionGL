@@ -2,9 +2,9 @@
 #include "Utils.h"
 
 enum ERRORS {
-  NONE = 0x0000,
-  FAIL_CREATE_WINDOW = 0x0001,
-  FAIL_INIT_GLAD = 0x0010,
+  NONE = 0b0000,
+  FAIL_CREATE_WINDOW = 0b0001,
+  FAIL_INIT_GLAD = 0b0010,
 };
 
 Window::Window() {
@@ -109,7 +109,7 @@ void Window::render() {
   glfwTerminate();
 }
 
-int Window::hasErrors() {
+int Window::hasErrors() const {
   return (errors & (FAIL_CREATE_WINDOW | FAIL_INIT_GLAD)) > 0;
 }
 

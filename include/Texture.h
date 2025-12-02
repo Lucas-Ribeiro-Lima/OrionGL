@@ -2,7 +2,6 @@
 
 class Texture
 {
-private:
 	unsigned int TEX = 0;
 public:
 	Texture(const char* texture);

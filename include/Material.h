@@ -7,6 +7,7 @@
 
 #include "Texture.h"
 #include "Constants.h"
+
 #include <memory>
 #include <string>
 
@@ -22,9 +23,12 @@ class Material {
     std::shared_ptr<Texture> emissive;
     MaterialData m_data;
     float shininess = 1.0f;
-  public:
+
+public:
     Material();
+
     Material(MaterialData &mat);
+
     void bindMaterial();
 };
 

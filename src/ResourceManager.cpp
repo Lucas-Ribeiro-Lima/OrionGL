@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <sstream>
+#include <concepts>
 
 template<typename key, typename value>
 using cache_map = std::unordered_map<key, std::weak_ptr<value> >;
@@ -16,7 +17,18 @@ std::shared_ptr<Value> tryToLockSmartPointer(Key &key, cache_map<Key, Value> &ma
     return _ptr;
 }
 
-constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphereRadiusVector(float radius);
+template<typename T>
+concept streameable = requires(std::ostream &os, T val)
+{
+    { os << val } -> std::same_as<std::ostream &>;
+};
+
+template<streameable... Args>
+std::string concatenateHashKeys(Args &&... args) {
+    std::stringstream ss;
+    (ss << ... << args);
+    return ss.str();
+};
 
 Camera &getCamera() {
     static Camera cam;
@@ -24,7 +36,7 @@ Camera &getCamera() {
 };
 
 Mesh &getCubeData() {
-    std::vector<float> vertexesCube = {
+    vertex_array vertexesCube = {
 
         -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //0
         0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, //1
@@ -39,7 +51,7 @@ Mesh &getCubeData() {
 
     };
 
-    std::vector<unsigned int> indexesCube = {
+    indexes_array indexesCube = {
         0, 1, 2, //0 Front
         0, 2, 3, //1 Front
 
@@ -76,7 +88,7 @@ std::shared_ptr<Mesh> getSphereData(float radius) {
     return ptr;
 }
 
-constexpr std::pair<std::vector<float>, std::vector<unsigned int> > generateSphereRadiusVector(const float radius) {
+constexpr std::pair<vertex_array, indexes_array> generateSphereRadiusVector(const float radius) {
     std::vector<float> vertexesSphere;
     std::vector<unsigned int> indexesSphere;
 
@@ -138,11 +150,7 @@ std::shared_ptr<Texture> getTextureData(const char *tex) {
 
 std::shared_ptr<Program> getProgram(const char *vertex, const char *frag) {
     static cache_map<std::string, Program> progMap;
-
-    std::stringstream ss;
-    ss << vertex << "," << frag;
-
-    std::string key = ss.str();
+    std::string key = concatenateHashKeys(vertex, frag);
 
     return tryToLockSmartPointer<std::string, Program>(key, progMap, vertex, frag);
 }
@@ -150,13 +158,9 @@ std::shared_ptr<Program> getProgram(const char *vertex, const char *frag) {
 
 std::shared_ptr<Material> getMaterial(MaterialData &mat) {
     static cache_map<std::string, Material> matMap;
-    std::stringstream ss;
-
-    ss <<
-            mat.diffusePath <<
-            mat.specularPath <<
-            mat.emissivePath << ";";
-
-    std::string key = ss.str();
+    std::string key = concatenateHashKeys(
+        mat.diffusePath.c_str(),
+        mat.specularPath.c_str(),
+        mat.emissivePath.c_str());
     return tryToLockSmartPointer<std::string, Material>(key, matMap, mat);
 }

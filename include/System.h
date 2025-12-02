@@ -18,7 +18,6 @@ public:
 };
 
 class PlanetSystem : public System {
-private:
     std::vector<Instances> stars;
     std::vector<Instances> planets;
     Camera &cam1;

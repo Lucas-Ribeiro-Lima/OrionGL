@@ -43,7 +43,7 @@ namespace Utils {
 
 	void logger(const char* log) {
 		time_t timestamp = time(NULL);
-		struct tm datetime;
+		tm datetime{};
 
 		#ifdef _WIN32
 				localtime_s(&datetime, &timestamp);

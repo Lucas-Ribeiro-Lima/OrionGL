@@ -1,12 +1,14 @@
 #pragma once
 #include "Model.h"
 
+typedef std::array<float, 3> Point;
+
 struct CorpData {
 	MaterialData mat;
 	float radius;
 	float rotationScaler;
 	float translationScaler;
-	std::array<float, 3> pos;
+	Point pos;
 };
 
 struct ShadersSrc {

@@ -8,7 +8,7 @@ public:
     Window();
     void render();
     void initializeSystem(System* sys);
-    int hasErrors();
+    int hasErrors() const;
 
 private:
     GLFWwindow *window = nullptr;

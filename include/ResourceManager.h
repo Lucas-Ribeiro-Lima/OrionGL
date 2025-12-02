@@ -19,3 +19,6 @@ std::shared_ptr<Texture> getTextureData(const char *tex);
 std::shared_ptr<Program> getProgram(const char *vertex, const char *frag);
 
 std::shared_ptr<Material> getMaterial(MaterialData &mat);
+
+constexpr std::pair<vertex_array, indexes_array> generateSphereRadiusVector(float radius);
+
