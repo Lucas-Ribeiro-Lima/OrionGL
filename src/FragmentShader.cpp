@@ -7,6 +7,6 @@ namespace oriongl::core {
         glShaderSource(ID, 1, &source, 0);
         glCompileShader(ID);
 
-        Shader::errors();
+        errors();
     }
 }
