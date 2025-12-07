@@ -1,14 +1,16 @@
 #pragma once
 
-class Shader {
-protected:
-  char infoLog[512];
-  const char *shaderSource;
-  unsigned int ID;
-  int sucess;
+namespace oriongl::core {
+    class Shader {
+    protected:
+        char infoLog[512];
+        const char *shaderSource;
+        unsigned int ID;
+        int sucess;
 
-public:
-  unsigned int getId();
+    public:
+        unsigned int getId();
 
-  void errors();
-};
+        void errors();
+    };
+}

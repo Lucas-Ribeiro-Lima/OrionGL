@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace Utils
+namespace oriongl::utils
 {
 	std::string readFile(const char path[]);
 	void writeFile(const char* path, auto content);

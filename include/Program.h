@@ -4,34 +4,47 @@
 #include "Light.h"
 #include "Camera.h"
 
-class Program
-{
-private:
-    char infoLog[512] = {};
-    Light light;
-    Camera &cam;
+namespace oriongl::core {
+    class Program {
+        char infoLog[512] = {};
+        Light light;
+        camera::Camera &cam;
 
-    glm::mat4 projection;
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = glm::mat4(1.0f);
-    glm::vec3 viewPos = glm::vec3(0.0f);
+        glm::mat4 projection;
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::vec3 viewPos = glm::vec3(0.0f);
 
-    int sucess = 0;
-    unsigned int ID = 0;
+        int sucess = 0;
+        unsigned int ID = 0;
 
-public:
-    Program(const char* vertex, const char* fragment);
-    Program& resetT();
-    Program& scale(glm::vec3 scaleProps);
-    Program& rotate(float degree, glm::vec3 rotateProps);
-    Program& translate(glm::vec3 translateProps);
-    void setCommonUniforms();
-    void setUniform1I(const char name[], int value) const;
-    void setUniform1UI(const char name[], int value) const;
-    void setUniform1f(const char name[], float value) const;
-    void setUniform3fv(const char name[], glm::vec3& vec);
-    void setUniform4fv(const char name[], glm::mat4& mat);
-    void setUniform1i(const char name[], int value);
-    void use();
-    void errors();
-};
+    public:
+        Program(const char *vertex, const char *fragment);
+
+        Program &resetT();
+
+        Program &scale(glm::vec3 scaleProps);
+
+        Program &rotate(float degree, glm::vec3 rotateProps);
+
+        Program &translate(glm::vec3 translateProps);
+
+        void setCommonUniforms();
+
+        void setUniform1I(const char name[], int value) const;
+
+        void setUniform1UI(const char name[], int value) const;
+
+        void setUniform1f(const char name[], float value) const;
+
+        void setUniform3fv(const char name[], glm::vec3 &vec);
+
+        void setUniform4fv(const char name[], glm::mat4 &mat);
+
+        void setUniform1i(const char name[], int value);
+
+        void use();
+
+        void errors();
+    };
+}

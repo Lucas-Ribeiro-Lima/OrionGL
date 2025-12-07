@@ -2,8 +2,8 @@
 #include <System.h>
 
 int main() {
-    Window window{};
-    PlanetSystem system{};
+    oriongl::render::Window window{};
+    oriongl::ecs::PlanetSystem system{};
 
     window.initializeSystem(&system);
 

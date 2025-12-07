@@ -4,7 +4,7 @@
 #include <format>
 #include <ctime>
 
-namespace Utils {
+namespace oriongl::utils {
 	std::string readFile(const char shaderName[]) {
 		try {
 			std::ifstream file(shaderName);

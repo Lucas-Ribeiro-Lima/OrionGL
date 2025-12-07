@@ -8,30 +8,32 @@
 #include <Instances.h>
 #include <vector>
 
-class System {
-public:
-    virtual void process() = 0;
+namespace oriongl::ecs {
+    class System {
+    public:
+        virtual void process() = 0;
 
-    virtual ~System() = default;
+        virtual ~System() = default;
 
-    virtual Camera &getMainCam() = 0;
-};
+        virtual camera::Camera &getMainCam() = 0;
+    };
 
-class PlanetSystem : public System {
-    std::vector<Instances> stars;
-    std::vector<Instances> planets;
-    Camera &cam1;
+    class PlanetSystem : public System {
+        std::vector<Instances> stars;
+        std::vector<Instances> planets;
+        camera::Camera &cam1;
 
-    void initSystem();
+        void initSystem();
 
-public:
-    PlanetSystem();
+    public:
+        PlanetSystem();
 
-    void process() override;
+        void process() override;
 
-    ~PlanetSystem() override = default;
+        ~PlanetSystem() override = default;
 
-    Camera &getMainCam() override;
-};
+        camera::Camera &getMainCam() override;
+    };
+}
 
 #endif //OPENGL_LEARNING_SYSTEM_H

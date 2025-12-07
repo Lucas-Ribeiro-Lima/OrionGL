@@ -7,13 +7,15 @@
 
 #include "Corp.h"
 
-class JsonParser {
-public:
-    using planets_data = std::vector<CorpData>;
-    using stars_data = std::vector<CorpData>;
-    using system_data = std::pair<planets_data, stars_data>;
+namespace oriongl::utils {
+    class JsonParser {
+    public:
+        using planets_data = std::vector<core::CorpData>;
+        using stars_data = std::vector<core::CorpData>;
+        using system_data = std::pair<planets_data, stars_data>;
 
-    static system_data readSystemData();
-};
+        static system_data readSystemData();
+    };
+}
 
 #endif //OPENGL_LEARNING_JSONPARSER_H
