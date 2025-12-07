@@ -1,4 +1,4 @@
-# OpenGL Learning
+# OrionGL
 
 C++ OpenGL application developed as part of a graphics and engine-learning portfolio. The project demonstrates a custom OpenGL rendering engine built using modern C++ practices, organized with clean architecture and an extensible design.
 
