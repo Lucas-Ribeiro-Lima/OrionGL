@@ -2,7 +2,7 @@
 #include <System.h>
 
 int main() {
-    oriongl::render::Window window{};
+    oriongl::render::Window window{ "OrionGL" };
     oriongl::ecs::PlanetSystem system{};
 
     window.initializeSystem(&system);

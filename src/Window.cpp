@@ -8,6 +8,12 @@ namespace oriongl::render {
         FAIL_INIT_GLAD = 0b0010,
     };
 
+    Window::Window(const char* title) :
+        Window{}
+    {
+        this->window_title = title;
+    }
+
     Window::Window() {
         errors = NONE;
 
@@ -45,7 +51,7 @@ namespace oriongl::render {
         monitor = glfwGetPrimaryMonitor();
         vidmode = glfwGetVideoMode(monitor);
 
-        GLFWwindow *w = glfwCreateWindow(vidmode->width, vidmode->height, "LearnOpenGL", nullptr, nullptr);
+        GLFWwindow *w = glfwCreateWindow(vidmode->width, vidmode->height, this->window_title, nullptr, nullptr);
         glfwSetWindowUserPointer(w, this);
         window = w;
 

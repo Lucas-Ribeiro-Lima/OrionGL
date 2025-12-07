@@ -7,6 +7,7 @@ namespace oriongl::render {
     class Window {
     public:
         Window();
+        Window(const char* title);
         void render();
         void initializeSystem(ecs::System* sys);
         int hasErrors() const;
@@ -16,6 +17,7 @@ namespace oriongl::render {
         GLFWmonitor *monitor = nullptr;
         const GLFWvidmode *vidmode = nullptr;
         ecs::System* sys = nullptr;
+        const char* window_title = "Default title";
         int height = 920;
         int width = 1280;
         int errors;
