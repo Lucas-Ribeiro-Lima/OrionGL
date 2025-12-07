@@ -10,7 +10,6 @@ namespace oriongl::render {
         Window(const char* title);
         void render();
         void initializeSystem(ecs::System* sys);
-        int hasErrors() const;
 
     private:
         GLFWwindow *window = nullptr;
@@ -20,7 +19,6 @@ namespace oriongl::render {
         const char* window_title = "Default title";
         int height = 920;
         int width = 1280;
-        int errors;
         float deltaTime = 0;
         float lastFrame = 0;
 

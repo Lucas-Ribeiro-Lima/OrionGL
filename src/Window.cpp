@@ -1,36 +1,19 @@
 #include "Window.h"
-#include "Utils.h"
 
 namespace oriongl::render {
-    enum ERRORS {
-        NONE = 0b0000,
-        FAIL_CREATE_WINDOW = 0b0001,
-        FAIL_INIT_GLAD = 0b0010,
-    };
-
-    Window::Window(const char* title) :
-        Window{}
-    {
+    Window::Window(const char *title) : Window{} {
         this->window_title = title;
     }
 
     Window::Window() {
-        errors = NONE;
-
         glfwConfiguration();
-
         windowInicialization();
-        if ((errors & FAIL_CREATE_WINDOW) == FAIL_CREATE_WINDOW) return;
-
         gladConfiguration();
-        if ((errors & FAIL_INIT_GLAD) == FAIL_INIT_GLAD) return;
     }
 
     void Window::gladConfiguration() {
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-            utils::logger("Failed to initialize GLAD");
-            errors = FAIL_INIT_GLAD;
-            return;
+            throw std::runtime_error("Failed to initialize GLAD");
         }
 
         glViewport(0, 0, vidmode->width, vidmode->height);
@@ -56,10 +39,8 @@ namespace oriongl::render {
         window = w;
 
         if (window == nullptr) {
-            utils::logger("Failed to create GLFW window");
-            errors = FAIL_CREATE_WINDOW;
             glfwTerminate();
-            return;
+            throw std::runtime_error("Failed to create GLFW window");
         }
 
         glfwMakeContextCurrent(window);
@@ -114,10 +95,6 @@ namespace oriongl::render {
         }
 
         glfwTerminate();
-    }
-
-    int Window::hasErrors() const {
-        return (errors & (FAIL_CREATE_WINDOW | FAIL_INIT_GLAD)) > 0;
     }
 
     void Window::framebufferSizeCallback(GLFWwindow *window, int width, int height) {

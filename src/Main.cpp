@@ -6,9 +6,6 @@ int main() {
     oriongl::ecs::PlanetSystem system{};
 
     window.initializeSystem(&system);
-
-    if (window.hasErrors()) return -1;
-
     window.render();
     return 0;
 }
