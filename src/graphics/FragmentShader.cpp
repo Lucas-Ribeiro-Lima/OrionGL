@@ -1,7 +1,7 @@
 #include "FragmentShader.h"
 #include <glad.h>
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     FragmentShader::FragmentShader(const char *source) : Shader() {
         ID = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(ID, 1, &source, 0);

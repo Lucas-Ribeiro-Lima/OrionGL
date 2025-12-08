@@ -5,7 +5,7 @@ namespace oriongl::core {
     typedef std::array<float, 3> Point;
 
     struct CorpData {
-        MaterialData mat;
+        graphics::MaterialData mat;
         float radius;
         float rotationScaler;
         float translationScaler;
@@ -17,7 +17,7 @@ namespace oriongl::core {
         const char *fragment;
     };
 
-    class Corp : public Model {
+    class Corp : public graphics::Model {
         float rotationScaler;
         float translationScaler;
 

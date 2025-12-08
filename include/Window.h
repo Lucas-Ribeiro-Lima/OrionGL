@@ -3,20 +3,23 @@
 #include <GLFW/glfw3.h>
 #include <System.h>
 
-namespace oriongl::render {
+namespace oriongl::graphics {
     class Window {
     public:
         Window();
-        Window(const char* title);
+
+        Window(const char *title);
+
         void render();
-        void initializeSystem(ecs::System* sys);
+
+        void initializeSystem(core::System *sys);
 
     private:
         GLFWwindow *window = nullptr;
         GLFWmonitor *monitor = nullptr;
         const GLFWvidmode *vidmode = nullptr;
-        ecs::System* sys = nullptr;
-        const char* window_title = "Default title";
+        core::System *sys = nullptr;
+        const char *window_title = "Default title";
         int height = 920;
         int width = 1280;
         float deltaTime = 0;
@@ -36,6 +39,7 @@ namespace oriongl::render {
         void calculateDeltaTime();
 
         static void mouseCallback(GLFWwindow *window, double xPos, double yPos);
+
         static void framebufferSizeCallback(GLFWwindow *window, int width, int height);
     };
 }

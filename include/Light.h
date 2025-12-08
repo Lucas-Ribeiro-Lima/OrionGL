@@ -7,7 +7,7 @@
 
 #include "glm/vec3.hpp"
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     struct Light {
         glm::vec3 position{0.0f};
         glm::vec3 ambient{0.05f};

@@ -7,9 +7,9 @@ namespace oriongl::core {
     Corp::Corp(
         CorpData &data
     ) : Model(
-            ecs::getSphereData(data.radius),
-            ecs::getProgram(utils::constants::VSHADER_1, utils::constants::FRAG_1),
-            ecs::getMaterial(data.mat)
+            getSphereData(data.radius),
+            getProgram(utils::constants::VSHADER_1, utils::constants::FRAG_1),
+            getMaterial(data.mat)
         ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
     }
 
@@ -17,9 +17,9 @@ namespace oriongl::core {
         CorpData &data,
         ShadersSrc shaders_src
     ) : Model(
-            ecs::getSphereData(data.radius),
-            ecs::getProgram(shaders_src.vertex, shaders_src.fragment),
-            ecs::getMaterial(data.mat)
+            getSphereData(data.radius),
+            getProgram(shaders_src.vertex, shaders_src.fragment),
+            getMaterial(data.mat)
         ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
     }
 

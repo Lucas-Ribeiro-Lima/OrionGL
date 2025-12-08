@@ -1,7 +1,7 @@
 #pragma once
 #include "Shader.h"
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     class VertexShader :
             public Shader {
     public:

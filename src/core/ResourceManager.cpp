@@ -5,7 +5,7 @@
 #include <sstream>
 #include <concepts>
 
-namespace oriongl::ecs {
+namespace oriongl::core {
     template<typename key, typename value>
     using cache_map = std::unordered_map<key, std::weak_ptr<value> >;
 
@@ -31,13 +31,13 @@ namespace oriongl::ecs {
         return ss.str();
     };
 
-    camera::Camera &getCamera() {
-        static camera::Camera cam{};
+    Camera &getCamera() {
+        static Camera cam{};
         return cam;
     };
 
-    core::Mesh &getCubeData() {
-        core::vertex_array vertexesCube = {
+    graphics::Mesh &getCubeData() {
+        graphics::vertex_array vertexesCube = {
 
             -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //0
             0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, //1
@@ -52,7 +52,7 @@ namespace oriongl::ecs {
 
         };
 
-        core::indexes_array indexesCube = {
+        graphics::indexes_array indexesCube = {
             0, 1, 2, //0 Front
             0, 2, 3, //1 Front
 
@@ -71,25 +71,25 @@ namespace oriongl::ecs {
             0, 4, 5, //10 Bottom
             0, 1, 5, //11 Bottom
         };
-        static core::Mesh ptr{vertexesCube, indexesCube};
+        static graphics::Mesh ptr{vertexesCube, indexesCube};
         return ptr;
     }
 
-    std::shared_ptr<core::Mesh> getSphereData(float radius) {
-        static cache_map<float, core::Mesh> radiusMap;
+    std::shared_ptr<graphics::Mesh> getSphereData(float radius) {
+        static cache_map<float, graphics::Mesh> radiusMap;
 
         if (radiusMap.contains(radius)) {
-            if (std::shared_ptr<core::Mesh> cashed_ptr = radiusMap[radius].lock()) return cashed_ptr;
+            if (std::shared_ptr<graphics::Mesh> cashed_ptr = radiusMap[radius].lock()) return cashed_ptr;
         }
 
         std::pair data = generateSphereRadiusVector(radius);
-        std::shared_ptr<core::Mesh> ptr = std::make_shared<core::Mesh>(data.first, data.second);
+        std::shared_ptr<graphics::Mesh> ptr = std::make_shared<graphics::Mesh>(data.first, data.second);
         radiusMap.insert({radius, ptr});
 
         return ptr;
     }
 
-    constexpr std::pair<core::vertex_array, core::indexes_array> generateSphereRadiusVector(const float radius) {
+    constexpr std::pair<graphics::vertex_array, graphics::indexes_array> generateSphereRadiusVector(const float radius) {
         std::vector<float> vertexesSphere;
         std::vector<unsigned int> indexesSphere;
 
@@ -143,26 +143,26 @@ namespace oriongl::ecs {
         return std::pair{vertexesSphere, indexesSphere};
     }
 
-    std::shared_ptr<core::Texture> getTextureData(const char *tex) {
-        static cache_map<const char *, core::Texture> texMap;
+    std::shared_ptr<graphics::Texture> getTextureData(const char *tex) {
+        static cache_map<const char *, graphics::Texture> texMap;
 
-        return tryToLockSmartPointer<const char *, core::Texture>(tex, texMap, tex);
+        return tryToLockSmartPointer<const char *, graphics::Texture>(tex, texMap, tex);
     }
 
-    std::shared_ptr<core::Program> getProgram(const char *vertex, const char *frag) {
-        static cache_map<std::string, core::Program> progMap;
+    std::shared_ptr<graphics::Program> getProgram(const char *vertex, const char *frag) {
+        static cache_map<std::string, graphics::Program> progMap;
         std::string key = concatenateHashKeys(vertex, frag);
 
-        return tryToLockSmartPointer<std::string, core::Program>(key, progMap, vertex, frag);
+        return tryToLockSmartPointer<std::string, graphics::Program>(key, progMap, vertex, frag);
     }
 
 
-    std::shared_ptr<core::Material> getMaterial(core::MaterialData &mat) {
-        static cache_map<std::string, core::Material> matMap;
+    std::shared_ptr<graphics::Material> getMaterial(graphics::MaterialData &mat) {
+        static cache_map<std::string, graphics::Material> matMap;
         std::string key = concatenateHashKeys(
             mat.diffusePath.c_str(),
             mat.specularPath.c_str(),
             mat.emissivePath.c_str());
-        return tryToLockSmartPointer<std::string, core::Material>(key, matMap, mat);
+        return tryToLockSmartPointer<std::string, graphics::Material>(key, matMap, mat);
     }
 }

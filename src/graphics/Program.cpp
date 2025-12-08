@@ -11,8 +11,8 @@
 
 #include <glad.h>
 
-namespace oriongl::core {
-    Program::Program(const char *vertex, const char *fragment) : cam(ecs::getCamera()) {
+namespace oriongl::graphics {
+    Program::Program(const char *vertex, const char *fragment) : cam(core::getCamera()) {
         VertexShader vShader(utils::readFile(vertex).c_str());
         FragmentShader fShader(utils::readFile(fragment).c_str());
 

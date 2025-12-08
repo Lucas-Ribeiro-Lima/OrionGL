@@ -9,7 +9,7 @@
 #define GL_STB_NULL_PLACEHOLDER 0
 //Map for the colors system of images of stb_images
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     constexpr int colorSystem[4] = {GL_STB_NULL_PLACEHOLDER, GL_STB_NULL_PLACEHOLDER, GL_RGB, GL_RGBA};
 
     Texture::Texture(const char *path) {

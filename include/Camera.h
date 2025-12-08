@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-namespace oriongl::camera {
+namespace oriongl::core {
     enum Directions {
         up = 1,
         front = 1,

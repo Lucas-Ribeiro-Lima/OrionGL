@@ -7,16 +7,16 @@
 #include "Constants.h"
 #include "ResourceManager.h"
 
-namespace oriongl::core {
-    Material::Material() : diffuse(ecs::getTextureData(utils::constants::TEXTURE_BLACK_FALLBACK)),
-                           specular(ecs::getTextureData(utils::constants::TEXTURE_BLACK_FALLBACK)),
-                           emissive(ecs::getTextureData(utils::constants::TEXTURE_BLACK_FALLBACK)) {
+namespace oriongl::graphics {
+    Material::Material() : diffuse(core::getTextureData(utils::constants::TEXTURE_BLACK_FALLBACK)),
+                           specular(core::getTextureData(utils::constants::TEXTURE_BLACK_FALLBACK)),
+                           emissive(core::getTextureData(utils::constants::TEXTURE_BLACK_FALLBACK)) {
     }
 
     Material::Material(MaterialData &mat) : m_data(std::move(mat)) {
-        diffuse = ecs::getTextureData(m_data.diffusePath.c_str());
-        specular = ecs::getTextureData(m_data.specularPath.c_str());
-        emissive = ecs::getTextureData(m_data.emissivePath.c_str());
+        diffuse = core::getTextureData(m_data.diffusePath.c_str());
+        specular = core::getTextureData(m_data.specularPath.c_str());
+        emissive = core::getTextureData(m_data.emissivePath.c_str());
     };
 
     void Material::bindMaterial() {

@@ -6,22 +6,23 @@
 #define OPENGL_LEARNING_SYSTEM_H
 
 #include <Instances.h>
+#include <Camera.h>
 #include <vector>
 
-namespace oriongl::ecs {
+namespace oriongl::core {
     class System {
     public:
         virtual void process() = 0;
 
         virtual ~System() = default;
 
-        virtual camera::Camera &getMainCam() = 0;
+        virtual Camera &getMainCam() = 0;
     };
 
     class PlanetSystem : public System {
         std::vector<Instances> stars;
         std::vector<Instances> planets;
-        camera::Camera &cam1;
+        Camera &cam1;
 
         void initSystem();
 
@@ -32,7 +33,7 @@ namespace oriongl::ecs {
 
         ~PlanetSystem() override = default;
 
-        camera::Camera &getMainCam() override;
+        Camera &getMainCam() override;
     };
 }
 

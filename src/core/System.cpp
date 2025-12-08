@@ -7,7 +7,7 @@
 #include <JsonParser.h>
 #include <ResourceManager.h>
 
-namespace oriongl::ecs {
+namespace oriongl::core {
     PlanetSystem::PlanetSystem() : cam1(getCamera()) {
         initSystem();
     }
@@ -22,7 +22,7 @@ namespace oriongl::ecs {
         }
     }
 
-    camera::Camera &PlanetSystem::getMainCam() {
+    core::Camera &PlanetSystem::getMainCam() {
         return cam1;
     }
 
@@ -33,7 +33,7 @@ namespace oriongl::ecs {
         std::vector<core::CorpData> stars_list = system_data.second;
 
         for (auto &_planet: planets_list) {
-            std::unique_ptr<core::Model> planet_ptr = std::make_unique<core::Corp>(_planet);
+            std::unique_ptr<graphics::Model> planet_ptr = std::make_unique<core::Corp>(_planet);
 
             auto _positions = std::make_shared<glm::vec3>(_planet.pos[0], _planet.pos[1], _planet.pos[2]);
             planets.emplace_back(std::move(planet_ptr));
@@ -41,9 +41,9 @@ namespace oriongl::ecs {
         }
 
         for (auto &_star: stars_list) {
-            std::unique_ptr<core::Model> star_ptr = std::make_unique<core::Corp>(_star, core::ShadersSrc{
+            std::unique_ptr<graphics::Model> star_ptr = std::make_unique<core::Corp>(_star, core::ShadersSrc{
                                                                          utils::constants::VSHADER_1,
-                                                                         utils::constants::FRAG_LIGHT
+                                                                         utils::constants::FRAG_LIGHT,
                                                                      });
 
             auto _positions = std::make_shared<glm::vec3>(_star.pos[0], _star.pos[1], _star.pos[2]);

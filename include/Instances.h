@@ -5,16 +5,16 @@
 
 #include "Model.h"
 
-namespace oriongl::ecs {
+namespace oriongl::core {
     typedef std::shared_ptr<glm::vec3> model_position;
     typedef std::vector<model_position> instances_positions;
 
     class Instances {
-        std::unique_ptr<core::Model> obj;
+        std::unique_ptr<graphics::Model> obj;
         instances_positions pos;
 
     public:
-        Instances(std::unique_ptr<core::Model> obj);
+        Instances(std::unique_ptr<graphics::Model> obj);
 
         void addInstance(model_position inst);
 

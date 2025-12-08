@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include <glad.h>
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     Mesh::Mesh(vertex_array &vertexes, indexes_array &indexes) {
         genVertexBufferObject(vertexes);
         genElementBufferObject(indexes);

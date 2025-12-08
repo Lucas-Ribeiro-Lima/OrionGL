@@ -11,7 +11,7 @@
 #include <memory>
 #include <string>
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     struct MaterialData {
         std::string diffusePath = utils::constants::TEXTURE_BLACK_FALLBACK;
         std::string specularPath = utils::constants::TEXTURE_BLACK_FALLBACK;

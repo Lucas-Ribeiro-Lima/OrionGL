@@ -8,7 +8,7 @@
 #include "Mesh.h"
 
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     using uint = unsigned int;
 
     class Model {

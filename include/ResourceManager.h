@@ -8,18 +8,18 @@
 
 #include <memory>
 
-namespace oriongl::ecs {
-    camera::Camera &getCamera();
+namespace oriongl::core {
+    Camera &getCamera();
 
-    core::Mesh &getCubeData();
+    graphics::Mesh &getCubeData();
 
-    std::shared_ptr<core::Mesh> getSphereData(float radius);
+    std::shared_ptr<graphics::Mesh> getSphereData(float radius);
 
-    std::shared_ptr<core::Texture> getTextureData(const char *tex);
+    std::shared_ptr<graphics::Texture> getTextureData(const char *tex);
 
-    std::shared_ptr<core::Program> getProgram(const char *vertex, const char *frag);
+    std::shared_ptr<graphics::Program> getProgram(const char *vertex, const char *frag);
 
-    std::shared_ptr<core::Material> getMaterial(core::MaterialData &mat);
+    std::shared_ptr<graphics::Material> getMaterial(graphics::MaterialData &mat);
 
-    constexpr std::pair<core::vertex_array, core::indexes_array> generateSphereRadiusVector(float radius);
+    constexpr std::pair<graphics::vertex_array, graphics::indexes_array> generateSphereRadiusVector(float radius);
 }

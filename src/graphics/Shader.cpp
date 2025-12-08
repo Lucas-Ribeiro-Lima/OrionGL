@@ -3,7 +3,7 @@
 #include <glad.h>
 #include <format>
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     void Shader::errors() {
         glGetShaderiv(ID, GL_COMPILE_STATUS, &sucess);
 

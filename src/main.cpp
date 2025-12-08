@@ -2,8 +2,8 @@
 #include <System.h>
 
 int main() {
-    oriongl::render::Window window{ "OrionGL" };
-    oriongl::ecs::PlanetSystem system{};
+    oriongl::graphics::Window window{ "OrionGL" };
+    oriongl::core::PlanetSystem system{};
 
     window.initializeSystem(&system);
     window.render();

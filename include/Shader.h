@@ -1,6 +1,6 @@
 #pragma once
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     class Shader {
     protected:
         char infoLog[512];

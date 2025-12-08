@@ -1,6 +1,6 @@
 #include "Window.h"
 
-namespace oriongl::render {
+namespace oriongl::graphics {
     Window::Window(const char *title) : Window{} {
         this->window_title = title;
     }
@@ -49,7 +49,7 @@ namespace oriongl::render {
         glfwSetCursorPosCallback(window, mouseCallback);
     }
 
-    void Window::initializeSystem(ecs::System *system) {
+    void Window::initializeSystem(core::System *system) {
         sys = system;
     }
 
@@ -59,22 +59,22 @@ namespace oriongl::render {
             glfwSetWindowShouldClose(window, true);
         }
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            sys->getMainCam().setFrontBack(deltaTime, camera::front);
+            sys->getMainCam().setFrontBack(deltaTime, core::front);
         }
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            sys->getMainCam().setFrontBack(deltaTime, camera::back);
+            sys->getMainCam().setFrontBack(deltaTime, core::back);
         }
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-            sys->getMainCam().setLeftRight(deltaTime, camera::left);
+            sys->getMainCam().setLeftRight(deltaTime, core::left);
         }
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            sys->getMainCam().setLeftRight(deltaTime, camera::right);
+            sys->getMainCam().setLeftRight(deltaTime, core::right);
         }
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            sys->getMainCam().setUpDown(deltaTime, camera::up);
+            sys->getMainCam().setUpDown(deltaTime, core::up);
         }
         if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-            sys->getMainCam().setUpDown(deltaTime, camera::down);
+            sys->getMainCam().setUpDown(deltaTime, core::down);
         }
     }
 

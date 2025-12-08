@@ -9,7 +9,7 @@
 using json = nlohmann::json;
 
 namespace oriongl::core {
-    void from_json(const json &j, core::CorpData &c) {
+    void from_json(const json &j, CorpData &c) {
         c.rotationScaler = j.value("rotation_speed", 1.0f);
         c.translationScaler = j.value("translation_speed", 1.0f);
         c.radius = j.value("radius", 1.0f);

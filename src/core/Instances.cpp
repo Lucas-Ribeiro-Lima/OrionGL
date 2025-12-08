@@ -1,7 +1,7 @@
 #include "Instances.h"
 
-namespace oriongl::ecs {
-    Instances::Instances(std::unique_ptr<core::Model> obj) : obj(std::move(obj)) {
+namespace oriongl::core {
+    Instances::Instances(std::unique_ptr<graphics::Model> obj) : obj(std::move(obj)) {
     };
 
     void Instances::drawInstances() {

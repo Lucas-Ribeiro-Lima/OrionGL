@@ -4,11 +4,11 @@
 #include "Light.h"
 #include "Camera.h"
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     class Program {
         char infoLog[512] = {};
         Light light;
-        camera::Camera &cam;
+        core::Camera &cam;
 
         glm::mat4 projection;
         glm::mat4 model = glm::mat4(1.0f);

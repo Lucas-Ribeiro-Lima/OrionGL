@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     using uint = unsigned int;
 
     typedef std::vector<float> vertex_array;

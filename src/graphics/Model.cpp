@@ -1,7 +1,7 @@
 #include "Model.h"
 #include <glad.h>
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program) : mesh(std::move(mesh)),
         program(std::move(program)) {
         genVertexArrayBuffer();

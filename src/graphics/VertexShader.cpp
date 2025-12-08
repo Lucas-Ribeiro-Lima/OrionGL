@@ -1,7 +1,7 @@
 #include "VertexShader.h"
 #include <glad.h>
 
-namespace oriongl::core {
+namespace oriongl::graphics {
     VertexShader::VertexShader(const char *source) : Shader() {
         ID = glCreateShader(GL_VERTEX_SHADER);
 
