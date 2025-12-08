@@ -5,7 +5,7 @@ set(INSTALL_DIR "oriongl")
 ##Installation
 install(TARGETS ${PROJECT_MAIN_EXEC}
         EXPORT "${INSTALL_NAME}_targets"
-        RUNTIME DESTINATION "${INSTALL_NAME}"
+        RUNTIME DESTINATION "bin"
 )
 
 install(DIRECTORY "assets"

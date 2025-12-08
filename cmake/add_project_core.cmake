@@ -18,7 +18,7 @@ set(PROJECT_CORE_LIB "${PROJECT_NAME}_core")
 add_library(${PROJECT_CORE_LIB} STATIC
         ${CPP_SOURCES_CORE}
         ${CPP_SOURCES_GRAPHICS}
-        ${CPP_SOURCES_PLATAFORM}
+        ${CPP_SOURCES_PLATFORM}
         ${CPP_SOURCES_BOUNDARY}
         ${CPP_SOURCES_UTILS}
         "src/graphics/glad.c")

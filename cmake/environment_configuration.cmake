@@ -1,4 +1,4 @@
-option(ORIONGL_DEV_MODE "Use development asset paths" OFF)
+option(ORIONGL_DEV_MODE "Use development asset paths" ON)
 
 if (ORIONGL_DEV_MODE)
     add_compile_definitions(ORIONGL_DEV_MODE=1)
