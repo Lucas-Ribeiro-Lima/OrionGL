@@ -23,6 +23,9 @@
         "earth_specular_map.tif",
         "earth_nightmap.jpg"
       ],
+      "defines":  [
+        "USE_EMISSION_TEXTURE"
+      ],
       "radius": 3.3,
       "rotation_speed": 8.0,
       "translation_speed": 0.2,

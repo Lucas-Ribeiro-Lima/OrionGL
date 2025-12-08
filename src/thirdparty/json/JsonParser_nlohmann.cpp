@@ -14,6 +14,9 @@ namespace oriongl::core {
         c.translationScaler = j.value("translation_speed", 1.0f);
         c.radius = j.value("radius", 1.0f);
 
+        if (j.contains("defines") && j["defines"].is_array())
+            c.defines = j["defines"].get<std::vector<std::string>>();
+
         if (j.contains("textures") && j["textures"].is_array()) {
             auto &tex = j["textures"];
 

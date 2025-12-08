@@ -5,6 +5,7 @@ namespace oriongl::core {
     typedef std::array<float, 3> Point;
 
     struct CorpData {
+        std::vector<std::string> defines;
         graphics::MaterialData mat;
         float radius;
         float rotationScaler;
