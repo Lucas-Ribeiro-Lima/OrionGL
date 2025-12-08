@@ -1,7 +1,7 @@
 #pragma once
 #include <glad.h>
 #include <GLFW/glfw3.h>
-#include <System.h>
+#include <Renderer.h>
 
 namespace oriongl::graphics {
     class Window {
@@ -12,13 +12,13 @@ namespace oriongl::graphics {
 
         void render();
 
-        void initializeSystem(core::System *sys);
+        void initializeSystem(core::Renderer *sys);
 
     private:
         GLFWwindow *window = nullptr;
         GLFWmonitor *monitor = nullptr;
         const GLFWvidmode *vidmode = nullptr;
-        core::System *sys = nullptr;
+        core::Renderer *sys = nullptr;
         const char *window_title = "Default title";
         int height = 920;
         int width = 1280;

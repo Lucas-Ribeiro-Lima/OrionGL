@@ -10,6 +10,11 @@ namespace oriongl::graphics {
         FRAGMENT = GL_FRAGMENT_SHADER,
     };
 
+    struct ShadersSrc {
+        std::string vertex;
+        std::string fragment;
+    };
+
     class Shader {
     protected:
         char infoLog[512];

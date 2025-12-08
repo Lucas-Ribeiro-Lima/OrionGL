@@ -3,23 +3,23 @@
 #include "ResourceManager.h"
 #include "Constants.h"
 
-namespace oriongl::core {
+namespace oriongl::samples {
     Corp::Corp(
         CorpData &data
     ) : Model(
-            getSphereData(data.radius),
-            getProgram(utils::constants::VSHADER_1, utils::constants::FRAG_1, data.defines),
-            getMaterial(data.mat)
+            core::getSphereData(data.radius),
+            core::getProgram(utils::constants::VSHADER_1, utils::constants::FRAG_1, data.defines),
+            core::getMaterial(data.mat)
         ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
     }
 
     Corp::Corp(
         CorpData &data,
-        ShadersSrc shaders_src
+        graphics::ShadersSrc shaders_src
     ) : Model(
-            getSphereData(data.radius),
-            getProgram(shaders_src.vertex, shaders_src.fragment, data.defines),
-            getMaterial(data.mat)
+            core::getSphereData(data.radius),
+            core::getProgram(shaders_src.vertex, shaders_src.fragment, data.defines),
+            core::getMaterial(data.mat)
         ), rotationScaler(data.rotationScaler), translationScaler(data.translationScaler) {
     }
 

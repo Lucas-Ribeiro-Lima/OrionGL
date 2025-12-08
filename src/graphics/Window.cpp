@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <stdexcept>
 
 namespace oriongl::graphics {
     Window::Window(const char *title) : Window{} {
@@ -49,7 +50,7 @@ namespace oriongl::graphics {
         glfwSetCursorPosCallback(window, mouseCallback);
     }
 
-    void Window::initializeSystem(core::System *system) {
+    void Window::initializeSystem(core::Renderer *system) {
         sys = system;
     }
 

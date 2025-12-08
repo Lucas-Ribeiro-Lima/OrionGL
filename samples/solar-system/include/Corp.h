@@ -1,7 +1,7 @@
 #pragma once
 #include "Model.h"
 
-namespace oriongl::core {
+namespace oriongl::samples {
     typedef std::array<float, 3> Point;
 
     struct CorpData {
@@ -13,11 +13,6 @@ namespace oriongl::core {
         Point pos;
     };
 
-    struct ShadersSrc {
-        std::string vertex;
-        std::string fragment;
-    };
-
     class Corp : public graphics::Model {
         float rotationScaler;
         float translationScaler;
@@ -25,7 +20,7 @@ namespace oriongl::core {
     public:
         Corp(CorpData &data);
 
-        Corp(CorpData &data, ShadersSrc shaders_src);
+        Corp(CorpData &data, graphics::ShadersSrc shaders_src);
 
         void draw() override;
     };

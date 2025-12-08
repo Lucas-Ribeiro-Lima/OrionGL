@@ -2,13 +2,16 @@
 // Created by lucas.lima on 30/11/2025.
 //
 
+
+#include <Constants.h>
 #include "JsonParser.h"
+
 #include <nlohmann/json.hpp>
 #include <fstream>
 
 using json = nlohmann::json;
 
-namespace oriongl::core {
+namespace oriongl::samples {
     void from_json(const json &j, CorpData &c) {
         c.rotationScaler = j.value("rotation_speed", 1.0f);
         c.translationScaler = j.value("translation_speed", 1.0f);
@@ -31,7 +34,7 @@ namespace oriongl::core {
 }
 
 
-namespace oriongl::utils {
+namespace oriongl::samples::utils {
     JsonParser::system_data JsonParser::readSystemData() {
         planets_data planets;
         stars_data stars;
@@ -40,11 +43,11 @@ namespace oriongl::utils {
         json parsed_json = json::parse(input_file);
 
         for (auto &planet_json: parsed_json.at("planets")) {
-            planets.push_back(planet_json.get<core::CorpData>());
+            planets.push_back(planet_json.get<CorpData>());
         }
 
         for (auto &star_json: parsed_json.at("stars")) {
-            stars.push_back(star_json.get<core::CorpData>());
+            stars.push_back(star_json.get<CorpData>());
         }
 
         return std::make_pair(std::move(planets), std::move(stars));

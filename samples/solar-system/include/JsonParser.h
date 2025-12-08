@@ -7,11 +7,12 @@
 
 #include "Corp.h"
 
-namespace oriongl::utils {
+namespace oriongl::samples::utils {
+
     class JsonParser {
     public:
-        using planets_data = std::vector<core::CorpData>;
-        using stars_data = std::vector<core::CorpData>;
+        using planets_data = std::vector<CorpData>;
+        using stars_data = std::vector<CorpData>;
         using system_data = std::pair<planets_data, stars_data>;
 
         static system_data readSystemData();

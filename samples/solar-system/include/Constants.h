@@ -2,7 +2,7 @@
 #include <string>
 #include <filesystem>
 
-namespace oriongl::utils::constants {
+namespace oriongl::samples::utils::constants {
     // Runtime functions
     std::string getRootPath();
 

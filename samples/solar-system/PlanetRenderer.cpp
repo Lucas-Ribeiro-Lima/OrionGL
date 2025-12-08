@@ -2,17 +2,18 @@
 // Created by lucas.lima on 30/11/2025.
 //
 
-#include <System.h>
+#include <PlanetRenderer.h>
 #include <Corp.h>
+#include <Constants.h>
 #include <JsonParser.h>
 #include <ResourceManager.h>
 
-namespace oriongl::core {
-    PlanetSystem::PlanetSystem() : cam1(getCamera()) {
-        initSystem();
+namespace oriongl::samples {
+    PlanetRenderer::PlanetRenderer() : cam1(core::getCamera()) {
+        loadData();
     }
 
-    void PlanetSystem::process() {
+    void PlanetRenderer::process() {
         for (auto &star: stars) {
             star.drawInstances();
         }
@@ -22,18 +23,18 @@ namespace oriongl::core {
         }
     }
 
-    core::Camera &PlanetSystem::getMainCam() {
+    core::Camera &PlanetRenderer::getMainCam() {
         return cam1;
     }
 
-    void PlanetSystem::initSystem() {
+    void PlanetRenderer::loadData() {
         auto system_data = utils::JsonParser::readSystemData();
 
-        std::vector<core::CorpData> planets_list = system_data.first;
-        std::vector<core::CorpData> stars_list = system_data.second;
+        std::vector<CorpData> planets_list = system_data.first;
+        std::vector<CorpData> stars_list = system_data.second;
 
         for (auto &_planet: planets_list) {
-            std::unique_ptr<graphics::Model> planet_ptr = std::make_unique<core::Corp>(_planet);
+            std::unique_ptr<graphics::Model> planet_ptr = std::make_unique<Corp>(_planet);
 
             auto _positions = std::make_shared<glm::vec3>(_planet.pos[0], _planet.pos[1], _planet.pos[2]);
             planets.emplace_back(std::move(planet_ptr));
@@ -41,7 +42,7 @@ namespace oriongl::core {
         }
 
         for (auto &_star: stars_list) {
-            std::unique_ptr<graphics::Model> star_ptr = std::make_unique<core::Corp>(_star, core::ShadersSrc{
+            std::unique_ptr<graphics::Model> star_ptr = std::make_unique<Corp>(_star, graphics::ShadersSrc{
                                                                          utils::constants::VSHADER_1,
                                                                          utils::constants::FRAG_LIGHT,
                                                                      });

@@ -3,14 +3,13 @@
 //
 
 #include <Constants.h>
-#include <Config.h>
 
 #include <unistd.h>
 #include <vector>
 #include <filesystem>
 #include <linux/limits.h>
 
-namespace oriongl::utils::constants {
+namespace oriongl::samples::utils::constants {
     std::string getRootPath() {
         static auto rootPath = []() -> std::string {
             std::vector<char> buffer(PATH_MAX);
@@ -34,7 +33,7 @@ namespace oriongl::utils::constants {
                     std::filesystem::path(getRootPath())
                     .parent_path()
                     / "share"
-                    / PROJECT_NAME
+                    / "sample-solar-system"
                     / "assets";
 
             if (!std::filesystem::exists(path)) {
@@ -54,7 +53,7 @@ namespace oriongl::utils::constants {
                     std::filesystem::path(getRootPath())
                     .parent_path()
                     / "share"
-                    / PROJECT_NAME
+                    / "sample-solar-system"
                     / "shaders";
 
             if (!std::filesystem::exists(path)) {
