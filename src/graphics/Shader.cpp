@@ -4,6 +4,21 @@
 #include <format>
 
 namespace oriongl::graphics {
+    Shader::Shader(ShaderType type, std::string src_path, std::vector<std::string> defines) {
+        ID = glCreateShader(type);
+
+        auto src = utils::readFile(src_path);
+        const char* src_raw = src.c_str();
+        glShaderSource(ID, 1, &src_raw, 0);
+        glCompileShader(ID);
+
+        errors();
+    }
+
+    Shader::~Shader() {
+        glDeleteShader(this->ID);
+    }
+
     void Shader::errors() {
         glGetShaderiv(ID, GL_COMPILE_STATUS, &sucess);
 
@@ -16,4 +31,5 @@ namespace oriongl::graphics {
     GLuint Shader::getId() {
         return ID;
     }
+
 }

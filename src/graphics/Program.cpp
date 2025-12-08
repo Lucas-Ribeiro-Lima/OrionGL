@@ -1,8 +1,6 @@
 #include "Program.h"
 #include "ResourceManager.h"
-#include "VertexShader.h"
-#include "FragmentShader.h"
-#include "Utils.h"
+#include "Shader.h"
 
 #include <string>
 #include <iostream>
@@ -12,16 +10,10 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-    Program::Program(std::string vertex, std::string fragment) : cam(core::getCamera()) {
-        VertexShader vShader(utils::readFile(vertex).c_str());
-        FragmentShader fShader(utils::readFile(fragment).c_str());
-
+    Program::Program(Shader&& vertex, Shader&& fragment) : cam(core::getCamera()) {
         ID = glCreateProgram();
-        GLuint shaderId = vShader.getId();
-        GLuint fragmentId = fShader.getId();
-
-        glAttachShader(ID, shaderId);
-        glAttachShader(ID, fragmentId);
+        glAttachShader(ID, vertex.getId());
+        glAttachShader(ID, fragment.getId());
         glLinkProgram(ID);
 
         int sucess;
@@ -32,9 +24,6 @@ namespace oriongl::graphics {
             glGetProgramInfoLog(ID, 512, NULL, infoLog);
             std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
         }
-
-        glDeleteShader(shaderId);
-        glDeleteShader(fragmentId);
     }
 
     void Program::errors() {

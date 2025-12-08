@@ -89,7 +89,8 @@ namespace oriongl::core {
         return ptr;
     }
 
-    constexpr std::pair<graphics::vertex_array, graphics::indexes_array> generateSphereRadiusVector(const float radius) {
+    constexpr std::pair<graphics::vertex_array, graphics::indexes_array>
+    generateSphereRadiusVector(const float radius) {
         std::vector<float> vertexesSphere;
         std::vector<unsigned int> indexesSphere;
 
@@ -149,11 +150,31 @@ namespace oriongl::core {
         return tryToLockSmartPointer<std::string, graphics::Texture>(tex, texMap, tex);
     }
 
-    std::shared_ptr<graphics::Program> getProgram(std::string vertex, std::string frag) {
+    std::shared_ptr<graphics::Program> getProgram(
+        std::string vertex_src_path,
+        std::string frag_src_path,
+        std::vector<std::string> defines) {
         static cache_map<std::string, graphics::Program> progMap;
-        std::string key = concatenateHashKeys(vertex, frag);
+        std::string key = concatenateHashKeys(vertex_src_path, frag_src_path, defines.data());
 
-        return tryToLockSmartPointer<std::string, graphics::Program>(key, progMap, vertex, frag);
+        graphics::Shader vertex_shader{
+            graphics::ShaderType::VERTEX,
+            vertex_src_path,
+            defines
+        };
+
+        graphics::Shader fragment_shader{
+            graphics::ShaderType::FRAGMENT,
+            frag_src_path,
+            defines
+        };
+
+        return tryToLockSmartPointer<std::string, graphics::Program>(
+            key,
+            progMap,
+            std::move(vertex_shader),
+            std::move(fragment_shader)
+        );
     }
 
 

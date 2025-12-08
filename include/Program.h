@@ -5,6 +5,7 @@
 
 #include "Light.h"
 #include "Camera.h"
+#include "Shader.h"
 
 namespace oriongl::graphics {
     class Program {
@@ -12,7 +13,7 @@ namespace oriongl::graphics {
         Light light;
         core::Camera &cam;
 
-        glm::mat4 projection;
+        glm::mat4 projection = glm::mat4(1.0f);
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::mat4(1.0f);
         glm::vec3 viewPos = glm::vec3(0.0f);
@@ -21,7 +22,7 @@ namespace oriongl::graphics {
         unsigned int ID = 0;
 
     public:
-        Program(std::string vertex,std::string fragment);
+        Program(Shader&& vertex, Shader&& fragment);
 
         Program &resetT();
 
