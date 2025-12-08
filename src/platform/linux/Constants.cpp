@@ -38,7 +38,7 @@ namespace oriongl::utils::constants {
                     / "assets";
 
             if (!std::filesystem::exists(path)) {
-                throw std::runtime_error("Could not resources folder, restore the installation");
+                throw std::runtime_error("Could not find resources folder, restore the installation");
             }
 
             path = std::filesystem::canonical(path);
@@ -58,7 +58,7 @@ namespace oriongl::utils::constants {
                     / "shaders";
 
             if (!std::filesystem::exists(path)) {
-                throw std::runtime_error("Could not resources folder, restore the installation");
+                throw std::runtime_error("Could not find resources folder, restore the installation");
             }
 
             path = std::filesystem::canonical(path);
