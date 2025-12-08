@@ -21,7 +21,7 @@ install(DIRECTORY "samples/solar-system/shaders"
 
 
 set(BUILD_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install-root")
-add_custom_target(build-sample
+add_custom_target(oriongl-build-sample
         COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --prefix "${BUILD_INSTALL_PREFIX}" --component sample
         DEPENDS ${PROJECT_TESTS_EXEC} ${PROJECT_SAMPLE_EXEC}
         COMMENT "Installing development layout to ${BUILD_INSTALL_PREFIX}"
@@ -33,7 +33,7 @@ else ()
     set(INSTALL_EXECUTABLE "${BUILD_INSTALL_PREFIX}/bin/${INSTALL_NAME}")
 endif ()
 
-add_custom_target(run-sample
+add_custom_target(oriongl-run-sample
         COMMAND "${INSTALL_EXECUTABLE}"
-        DEPENDS build-sample
+        DEPENDS oriongl-build-sample
 )
