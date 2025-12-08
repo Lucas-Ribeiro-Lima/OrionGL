@@ -9,7 +9,7 @@ namespace oriongl::graphics {
 
         if (!sucess) {
             glGetShaderInfoLog(ID, 512, NULL, infoLog);
-            utils::logger(std::format("ORIONGL::CORE::SHADER::COMPILATION_FAILED + {}", infoLog).c_str());
+            utils::logger(std::format("ORIONGL::CORE::SHADER::COMPILATION_FAILED + {}", infoLog));
         }
     }
 

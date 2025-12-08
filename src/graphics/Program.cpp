@@ -12,7 +12,7 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-    Program::Program(const char *vertex, const char *fragment) : cam(core::getCamera()) {
+    Program::Program(std::string vertex, std::string fragment) : cam(core::getCamera()) {
         VertexShader vShader(utils::readFile(vertex).c_str());
         FragmentShader fShader(utils::readFile(fragment).c_str());
 

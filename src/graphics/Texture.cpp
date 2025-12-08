@@ -12,10 +12,10 @@
 namespace oriongl::graphics {
     constexpr int colorSystem[4] = {GL_STB_NULL_PLACEHOLDER, GL_STB_NULL_PLACEHOLDER, GL_RGB, GL_RGBA};
 
-    Texture::Texture(const char *path) {
+    Texture::Texture(std::string path) {
         int width, heigth, nrChannels;
         stbi_set_flip_vertically_on_load(true);
-        unsigned char *data = stbi_load(path, &width, &heigth, &nrChannels, 0);
+        unsigned char *data = stbi_load(path.c_str(), &width, &heigth, &nrChannels, 0);
 
         glGenTextures(1, &TEX);
         glActiveTexture(GL_TEXTURE0);

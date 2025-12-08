@@ -143,13 +143,13 @@ namespace oriongl::core {
         return std::pair{vertexesSphere, indexesSphere};
     }
 
-    std::shared_ptr<graphics::Texture> getTextureData(const char *tex) {
-        static cache_map<const char *, graphics::Texture> texMap;
+    std::shared_ptr<graphics::Texture> getTextureData(std::string tex) {
+        static cache_map<std::string, graphics::Texture> texMap;
 
-        return tryToLockSmartPointer<const char *, graphics::Texture>(tex, texMap, tex);
+        return tryToLockSmartPointer<std::string, graphics::Texture>(tex, texMap, tex);
     }
 
-    std::shared_ptr<graphics::Program> getProgram(const char *vertex, const char *frag) {
+    std::shared_ptr<graphics::Program> getProgram(std::string vertex, std::string frag) {
         static cache_map<std::string, graphics::Program> progMap;
         std::string key = concatenateHashKeys(vertex, frag);
 

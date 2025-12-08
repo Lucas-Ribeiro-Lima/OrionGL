@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <string>
+
 #include "Light.h"
 #include "Camera.h"
 
@@ -19,7 +21,7 @@ namespace oriongl::graphics {
         unsigned int ID = 0;
 
     public:
-        Program(const char *vertex, const char *fragment);
+        Program(std::string vertex,std::string fragment);
 
         Program &resetT();
 

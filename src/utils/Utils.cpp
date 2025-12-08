@@ -5,9 +5,9 @@
 #include <ctime>
 
 namespace oriongl::utils {
-	std::string readFile(const char shaderName[]) {
+	std::string readFile(std::string path) {
 		try {
-			std::ifstream file(shaderName);
+			std::ifstream file(path);
 
 			file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
@@ -24,7 +24,7 @@ namespace oriongl::utils {
 		}
 	}
 
-	void writeFile(const char* path, auto content) {
+	void writeFile(std::string path, std::string content) {
 		try {
 			std::ofstream file(path);
 
@@ -41,7 +41,7 @@ namespace oriongl::utils {
 		}
 	}
 
-	void logger(const char* log) {
+	void logger(std::string log) {
 		time_t timestamp = time(NULL);
 		tm datetime{};
 

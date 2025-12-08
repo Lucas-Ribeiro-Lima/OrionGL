@@ -13,8 +13,8 @@ namespace oriongl::core {
     };
 
     struct ShadersSrc {
-        const char *vertex;
-        const char *fragment;
+        std::string vertex;
+        std::string fragment;
     };
 
     class Corp : public graphics::Model {

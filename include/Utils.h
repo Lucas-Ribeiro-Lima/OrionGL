@@ -3,8 +3,8 @@
 
 namespace oriongl::utils
 {
-	std::string readFile(const char path[]);
-	void writeFile(const char* path, auto content);
-	void logger(const char* log);
+	std::string readFile(std::string path);
+	void writeFile(std::string path, auto content);
+	void logger(std::string log);
 };
 

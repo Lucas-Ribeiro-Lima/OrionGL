@@ -2,3 +2,4 @@
 
 #define ASSETS_DIR "@PROJECT_SOURCE_DIR@/assets/"
 #define SHADER_DIR "@PROJECT_SOURCE_DIR@/shaders/"
+#define PROJECT_NAME "@PROJECT_NAME@"
