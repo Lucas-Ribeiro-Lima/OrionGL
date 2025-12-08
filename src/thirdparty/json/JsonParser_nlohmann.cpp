@@ -17,9 +17,9 @@ namespace oriongl::core {
         if (j.contains("textures") && j["textures"].is_array()) {
             auto &tex = j["textures"];
 
-            if (tex.size() > 0) c.mat.diffusePath = ASSETS_DIR + tex[0].get<std::string>();
-            if (tex.size() > 1) c.mat.specularPath = ASSETS_DIR + tex[1].get<std::string>();
-            if (tex.size() > 2) c.mat.emissivePath = ASSETS_DIR + tex[2].get<std::string>();
+            if (tex.size() > 0) c.mat.diffusePath = utils::constants::ASSETS_PATH + tex[0].get<std::string>();
+            if (tex.size() > 1) c.mat.specularPath = utils::constants::ASSETS_PATH + tex[1].get<std::string>();
+            if (tex.size() > 2) c.mat.emissivePath = utils::constants::ASSETS_PATH + tex[2].get<std::string>();
         }
 
         if (j.at("position").size() != 3) throw std::runtime_error("Corrupted json file");

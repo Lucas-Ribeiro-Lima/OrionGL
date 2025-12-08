@@ -42,7 +42,7 @@ namespace oriongl::utils::constants {
             }
 
             path = std::filesystem::canonical(path);
-            return path.string();
+            return path.string() + "/";
         }();
 
         return assetPath;
@@ -62,7 +62,7 @@ namespace oriongl::utils::constants {
             }
 
             path = std::filesystem::canonical(path);
-            return path.string();
+            return path.string() + "/";
         }();
 
         return shadersPath;
