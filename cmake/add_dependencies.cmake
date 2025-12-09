@@ -12,10 +12,6 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-        json
-        URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
-
-FetchContent_Declare(
         googletest
         # Specify the commit you depend on and update it regularly.
         URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
@@ -27,5 +23,4 @@ set(INSTALL_GMOCK OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(glm)
 FetchContent_MakeAvailable(glfw)
-FetchContent_MakeAvailable(json)
 FetchContent_MakeAvailable(googletest)

@@ -1,5 +1,10 @@
 set(SAMPLE_DIR "${PROJECT_SOURCE_DIR}/samples/solar-system")
 
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
 if(APPLE)
     file(GLOB_RECURSE CPP_SOURCES_PLATFORM "${SAMPLE_DIR}/platform/mac/*.cpp")
 elseif (WIN32)
