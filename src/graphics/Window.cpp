@@ -50,8 +50,8 @@ namespace oriongl::graphics {
         glfwSetCursorPosCallback(window, mouseCallback);
     }
 
-    void Window::initializeSystem(core::Renderer *system) {
-        sys = system;
+    void Window::linkRenderer(core::Renderer *render) {
+        renderer = render;
     }
 
 
@@ -60,22 +60,22 @@ namespace oriongl::graphics {
             glfwSetWindowShouldClose(window, true);
         }
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            sys->getMainCam().setFrontBack(deltaTime, core::front);
+            renderer->getMainCam().setFrontBack(deltaTime, core::front);
         }
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            sys->getMainCam().setFrontBack(deltaTime, core::back);
+            renderer->getMainCam().setFrontBack(deltaTime, core::back);
         }
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-            sys->getMainCam().setLeftRight(deltaTime, core::left);
+            renderer->getMainCam().setLeftRight(deltaTime, core::left);
         }
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            sys->getMainCam().setLeftRight(deltaTime, core::right);
+            renderer->getMainCam().setLeftRight(deltaTime, core::right);
         }
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            sys->getMainCam().setUpDown(deltaTime, core::up);
+            renderer->getMainCam().setUpDown(deltaTime, core::up);
         }
         if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-            sys->getMainCam().setUpDown(deltaTime, core::down);
+            renderer->getMainCam().setUpDown(deltaTime, core::down);
         }
     }
 
@@ -88,7 +88,7 @@ namespace oriongl::graphics {
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            sys->process();
+            renderer->render();
 
             glfwSwapBuffers(window);
 
@@ -104,7 +104,7 @@ namespace oriongl::graphics {
 
     void Window::mouseCallback(GLFWwindow *window, double xPos, double yPos) {
         auto self = static_cast<Window *>(glfwGetWindowUserPointer(window));
-        self->sys->getMainCam().update(xPos, yPos);
+        self->renderer->getMainCam().update(xPos, yPos);
     }
 
     void Window::calculateDeltaTime() {

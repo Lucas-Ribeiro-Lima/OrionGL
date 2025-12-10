@@ -18,7 +18,7 @@ namespace oriongl::core {
 		Renderer();
         virtual ~Renderer() = default;
 
-        virtual void process();
+        virtual void render();
         virtual Camera &getMainCam();
     };
 }

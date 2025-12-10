@@ -6,7 +6,7 @@ int main() {
     oriongl::graphics::Window window{ "OrionGL-Sample" };
     oriongl::samples::PlanetRenderer renderer{};
 
-    window.initializeSystem(&renderer);
+    window.linkRenderer(&renderer);
     window.render();
     return 0;
 }

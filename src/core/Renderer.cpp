@@ -8,7 +8,7 @@
 namespace oriongl::core {
     Renderer::Renderer() : cam1(getCamera()) {}
 
-    void Renderer::process() {
+    void Renderer::render() {
         for (auto &i: data) {
             i.drawInstances();
         }

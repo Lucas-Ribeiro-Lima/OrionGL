@@ -12,13 +12,13 @@ namespace oriongl::graphics {
 
         void render();
 
-        void initializeSystem(core::Renderer *sys);
+        void linkRenderer(core::Renderer *render);
 
     private:
         GLFWwindow *window = nullptr;
         GLFWmonitor *monitor = nullptr;
         const GLFWvidmode *vidmode = nullptr;
-        core::Renderer *sys = nullptr;
+        core::Renderer *renderer = nullptr;
         const char *window_title = "Default title";
         int height = 920;
         int width = 1280;

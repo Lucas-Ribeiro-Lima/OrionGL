@@ -13,7 +13,7 @@ namespace oriongl::samples {
         loadData();
     }
 
-    void PlanetRenderer::process() {
+    void PlanetRenderer::render() {
         for (auto &star: stars) {
             star.drawInstances();
         }

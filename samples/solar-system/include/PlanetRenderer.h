@@ -18,7 +18,7 @@ namespace oriongl::samples {
     public:
         PlanetRenderer();
 
-        void process() override;
+        void render() override;
 
         ~PlanetRenderer() override = default;
 
