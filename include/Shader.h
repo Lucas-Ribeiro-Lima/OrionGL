@@ -17,17 +17,19 @@ namespace oriongl::graphics {
 
     class Shader {
     protected:
-        char infoLog[512];
+        char infoLog[512] = {};
         std::string shaderSource;
         std::vector<std::string> defines;
         unsigned int ID;
-        int sucess;
+        int success = 0;
 
     public:
-        Shader(ShaderType type, std::string src_path, const std::vector<std::string> &defines);
+        Shader(ShaderType type, const std::string& src_path, const std::vector<std::string> &defines);
+        Shader(ShaderType type, const char* src_raw, const std::vector<std::string> &defines);
         ~Shader();
-        std::string injectDefines() const;
-        unsigned int getId();
+        void injectDefines();
+        void compileShader() const;
+        [[nodiscard]] unsigned int getId() const;
         void errors();
     };
 }

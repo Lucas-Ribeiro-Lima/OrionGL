@@ -5,49 +5,59 @@
 #include <sstream>
 
 namespace oriongl::graphics {
-    Shader::Shader(ShaderType type, std::string src_path, const std::vector<std::string> &defines):
+    Shader::Shader(ShaderType type, const std::string& src_path, const std::vector<std::string> &defines):
         ID(glCreateShader(type)),
-        shaderSource(src_path),
         defines(defines)
     {
-        std::string src_processed = injectDefines();
-        const char* raw_data = src_processed.c_str();
-        glShaderSource(ID, 1, &raw_data, 0);
-        glCompileShader(ID);
-
+        shaderSource = utils::readFile(src_path);
+        injectDefines();
+        compileShader();
         errors();
     }
 
-    std::string Shader::injectDefines() const {
-        std::stringstream ss;
-        std::string source_data = utils::readFile(shaderSource);
+    Shader::Shader(ShaderType type, const char *src_raw, const std::vector<std::string> &defines):
+        ID(glCreateShader(type)),
+        shaderSource(src_raw),
+        defines(defines)
+    {
+        injectDefines();
+        compileShader();
+        errors();
+    }
 
-        const size_t first_break_line = source_data.find_first_of("\n");
-        ss << source_data.substr(0, first_break_line);
+    void Shader::injectDefines() {
+        std::stringstream ss;
+        const size_t first_break_line = shaderSource.find_first_of("\n");
+        ss << shaderSource.substr(0, first_break_line);
         for (auto& define : defines) {
             ss << "\n#define " << define;
         }
         ss << "\n";
-        ss << source_data.substr(first_break_line);
+        ss << shaderSource.substr(first_break_line);
 
-        return ss.str();
+        shaderSource = ss.str();
     }
 
+    void Shader::compileShader() const {
+        const char* raw = &shaderSource[0];
+        glShaderSource(ID, 1, &raw, 0);
+        glCompileShader(ID);
+    }
 
     Shader::~Shader() {
         glDeleteShader(this->ID);
     }
 
     void Shader::errors() {
-        glGetShaderiv(ID, GL_COMPILE_STATUS, &sucess);
+        glGetShaderiv(ID, GL_COMPILE_STATUS, &success);
 
-        if (!sucess) {
+        if (!success) {
             glGetShaderInfoLog(ID, 512, NULL, infoLog);
             utils::logger(std::format("ORIONGL::CORE::SHADER::COMPILATION_FAILED + {}", infoLog));
         }
     }
 
-    GLuint Shader::getId() {
+    GLuint Shader::getId() const {
         return ID;
     }
 
