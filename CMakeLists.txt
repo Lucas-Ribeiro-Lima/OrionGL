@@ -24,7 +24,5 @@
  endif ()
 
  if (COMPILE_SAMPLES)
-     include(add_project_sample)
-     include(install_sample_configuration)
-     include(package_configuration)
+     add_subdirectory(samples)
  endif ()

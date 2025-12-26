@@ -9,12 +9,12 @@ install(TARGETS ${PROJECT_SAMPLE_EXEC}
         COMPONENT sample
 )
 
-install(DIRECTORY "samples/solar-system/assets"
+install(DIRECTORY "assets"
         DESTINATION "share/${INSTALL_DIR}"
         COMPONENT sample
 )
 
-install(DIRECTORY "samples/solar-system/shaders"
+install(DIRECTORY "shaders"
         DESTINATION "share/${INSTALL_DIR}"
         COMPONENT sample
 )

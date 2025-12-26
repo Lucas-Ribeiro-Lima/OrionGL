@@ -1,4 +1,4 @@
-set(SAMPLE_DIR "${PROJECT_SOURCE_DIR}/samples/solar-system")
+set(SAMPLE_DIR "${PROJECT_SOURCE_DIR}")
 
 FetchContent_Declare(
         json
