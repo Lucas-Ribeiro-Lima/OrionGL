@@ -7,7 +7,7 @@
 
 #include <Renderer.h>
 
-namespace oriongl::samples {
+namespace oriongl::samples::solar_system {
     class PlanetRenderer : public core::Renderer {
         std::vector<core::Instances> stars;
         std::vector<core::Instances> planets;

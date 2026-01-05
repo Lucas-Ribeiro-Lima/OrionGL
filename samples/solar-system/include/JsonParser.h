@@ -11,8 +11,8 @@ namespace oriongl::samples::utils {
 
     class JsonParser {
     public:
-        using planets_data = std::vector<CorpData>;
-        using stars_data = std::vector<CorpData>;
+        using planets_data = std::vector<solar_system::CorpData>;
+        using stars_data = std::vector<solar_system::CorpData>;
         using system_data = std::pair<planets_data, stars_data>;
 
         static system_data readSystemData();

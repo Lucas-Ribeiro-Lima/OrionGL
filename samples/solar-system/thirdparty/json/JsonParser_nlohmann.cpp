@@ -11,8 +11,8 @@
 
 using json = nlohmann::json;
 
-namespace oriongl::samples {
-    void from_json(const json &j, CorpData &c) {
+namespace oriongl::samples::solar_system {
+    void from_json(const json &j, solar_system::CorpData &c) {
         c.rotationScaler = j.value("rotation_speed", 1.0f);
         c.translationScaler = j.value("translation_speed", 1.0f);
         c.radius = j.value("radius", 1.0f);
@@ -43,11 +43,11 @@ namespace oriongl::samples::utils {
         json parsed_json = json::parse(input_file);
 
         for (auto &planet_json: parsed_json.at("planets")) {
-            planets.push_back(planet_json.get<CorpData>());
+            planets.push_back(planet_json.get<solar_system::CorpData>());
         }
 
         for (auto &star_json: parsed_json.at("stars")) {
-            stars.push_back(star_json.get<CorpData>());
+            stars.push_back(star_json.get<solar_system::CorpData>());
         }
 
         return std::make_pair(std::move(planets), std::move(stars));

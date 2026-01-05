@@ -1,7 +1,7 @@
 #pragma once
 #include "Model.h"
 
-namespace oriongl::samples {
+namespace oriongl::samples::solar_system {
     typedef std::array<float, 3> Point;
 
     struct CorpData {

@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 #include "Constants.h"
 
-namespace oriongl::samples {
+namespace oriongl::samples::solar_system {
     Corp::Corp(
         CorpData &data
     ) : Model(

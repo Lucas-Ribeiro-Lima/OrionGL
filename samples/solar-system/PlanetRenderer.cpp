@@ -8,7 +8,7 @@
 #include <JsonParser.h>
 #include <ResourceManager.h>
 
-namespace oriongl::samples {
+namespace oriongl::samples::solar_system {
     PlanetRenderer::PlanetRenderer() : cam1(core::getCamera()) {
         loadData();
     }

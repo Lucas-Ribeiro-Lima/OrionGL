@@ -4,7 +4,7 @@
 
 int main() {
     oriongl::graphics::Window window{ "OrionGL-Sample" };
-    oriongl::samples::PlanetRenderer renderer{};
+    oriongl::samples::solar_system::PlanetRenderer renderer{};
 
     window.linkRenderer(&renderer);
     window.render();
