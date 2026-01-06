@@ -4,56 +4,60 @@
 #include <memory>
 
 #include "Material.h"
-#include "Program.h"
 #include "Mesh.h"
-
+#include "Program.h"
 
 namespace oriongl::graphics {
-    using uint = unsigned int;
+using uint = unsigned int;
 
-    class Model {
-    protected:
-        glm::vec3 translateAxis = glm::vec3(0.0f);
-        glm::vec3 scaleAxis = glm::vec3(1.0f);
-        glm::vec3 rotateAxis = glm::vec3(1.0f);
+struct VertexData {
+    float position[3];
+    float normal[3];
+    float text_coords[2];
+};
 
-        std::shared_ptr<Mesh> mesh = nullptr;
-        std::shared_ptr<Program> program = nullptr;
-        std::shared_ptr<Material> material = nullptr;
+class Model {
+  protected:
+    glm::vec3 translateAxis = glm::vec3(0.0f);
+    glm::vec3 scaleAxis = glm::vec3(1.0f);
+    glm::vec3 rotateAxis = glm::vec3(1.0f);
 
-        uint VAO = 0;
-        float rotateDeg = 0;
+    std::shared_ptr<Mesh> mesh = nullptr;
+    std::shared_ptr<Program> program = nullptr;
+    std::shared_ptr<Material> material = nullptr;
 
-        bool wireframe = false;
+    uint VAO = 0;
+    float rotateDeg = 0;
 
-        void saveBuffer();
+    bool wireframe = false;
 
-        void genVertexArrayBuffer();
+    void saveBuffer();
 
-        void bindGeometry() const;
+    void genVertexArrayBuffer();
 
-        void bindTexture() const;
+    void bindGeometry() const;
 
-    public:
-        Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program);
+    void bindTexture() const;
 
-        Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program,
-              std::shared_ptr<Material> material);
+  public:
+    Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program);
 
-        virtual ~Model() = default;
+    Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program, std::shared_ptr<Material> material);
 
-        uint getID() const;
+    virtual ~Model() = default;
 
-        Model &setProgram(std::shared_ptr<Program> prg);
+    uint getID() const;
 
-        Model &setTranslate(glm::vec3 axis);
+    Model &setProgram(std::shared_ptr<Program> prg);
 
-        Model &setRotate(float deg, glm::vec3 axis);
+    Model &setTranslate(glm::vec3 axis);
 
-        Model &setScale(glm::vec3 axis);
+    Model &setRotate(float deg, glm::vec3 axis);
 
-        void setWireframe(bool state);
+    Model &setScale(glm::vec3 axis);
 
-        virtual void draw();
-    };
-}
+    void setWireframe(bool state);
+
+    virtual void draw();
+};
+} // namespace oriongl::graphics

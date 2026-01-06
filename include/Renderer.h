@@ -5,22 +5,24 @@
 #ifndef OPENGL_LEARNING_SYSTEM_H
 #define OPENGL_LEARNING_SYSTEM_H
 
-#include <Instances.h>
 #include <Camera.h>
+#include <Instances.h>
 #include <vector>
 
 namespace oriongl::core {
-    class Renderer {
-        std::vector<Instances> data;
-        Camera &cam1;
+class Renderer {
+    Camera &cam1;
 
-    public:
-		Renderer();
-        virtual ~Renderer() = default;
+  protected:
+    std::vector<Instances> data;
 
-        virtual void render();
-        virtual Camera &getMainCam();
-    };
-}
+  public:
+    Renderer();
+    virtual ~Renderer() = default;
 
-#endif //OPENGL_LEARNING_SYSTEM_H
+    virtual void render();
+    virtual Camera &getMainCam();
+};
+} // namespace oriongl::core
+
+#endif // OPENGL_LEARNING_SYSTEM_H
