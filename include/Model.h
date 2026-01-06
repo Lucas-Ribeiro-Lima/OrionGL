@@ -9,6 +9,19 @@
 
 namespace oriongl::graphics {
 using uint = unsigned int;
+typedef glm::vec3 model_vector;
+
+typedef model_vector ModelPosition;
+typedef model_vector ModelScaleAxis;
+typedef model_vector ModelRotateAxis;
+typedef float ModelRotateDeg;
+
+struct ModelData {
+  ModelPosition position{ 0.0f };
+  ModelScaleAxis scale_axis{ 1.0f };
+  ModelRotateAxis rotate_axis{ 1.0f };
+  ModelRotateDeg rotate_deg{ 0.0f };
+};
 
 struct VertexData {
     float position[3];
@@ -18,17 +31,13 @@ struct VertexData {
 
 class Model {
   protected:
-    glm::vec3 translateAxis = glm::vec3(0.0f);
-    glm::vec3 scaleAxis = glm::vec3(1.0f);
-    glm::vec3 rotateAxis = glm::vec3(1.0f);
+    ModelData data{};
 
     std::shared_ptr<Mesh> mesh = nullptr;
     std::shared_ptr<Program> program = nullptr;
     std::shared_ptr<Material> material = nullptr;
 
     uint VAO = 0;
-    float rotateDeg = 0;
-
     bool wireframe = false;
 
     void saveBuffer();

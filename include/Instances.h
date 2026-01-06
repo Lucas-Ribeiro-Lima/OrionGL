@@ -1,25 +1,24 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include "Model.h"
 
 namespace oriongl::core {
-    typedef std::shared_ptr<glm::vec3> model_position;
-    typedef std::vector<model_position> instances_positions;
+typedef std::vector<std::shared_ptr<graphics::ModelData>> instances_data; 
 
-    class Instances {
-        std::unique_ptr<graphics::Model> obj;
-        instances_positions pos;
+class Instances {
+    std::unique_ptr<graphics::Model> obj;
+    instances_data instances;
 
-    public:
-        Instances(std::unique_ptr<graphics::Model> obj);
+  public:
+    Instances(std::unique_ptr<graphics::Model> obj);
 
-        void addInstance(model_position inst);
+    void addInstance(graphics::ModelData inst);
 
-        void deleteInstance(size_t index);
+    void deleteInstance(size_t index);
 
-        void drawInstances();
-    };
-}
+    void drawInstances();
+};
+} // namespace oriongl::core

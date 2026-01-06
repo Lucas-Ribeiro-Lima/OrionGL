@@ -11,7 +11,7 @@
 namespace oriongl::core {
 Camera &getCamera();
 
-std::shared_ptr<graphics::Mesh> getCubeData();
+std::shared_ptr<graphics::Mesh> getCubeData(float side_size);
 
 std::shared_ptr<graphics::Mesh> getSphereData(float radius);
 

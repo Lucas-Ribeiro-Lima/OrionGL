@@ -87,25 +87,41 @@ const char *frag_light_shader = R"(#version 330 core
 )";
 
 BoxesRenderer::BoxesRenderer() {
+    // clang-format off
+    const std::vector<glm::vec3> cubePositions = {
+        {  35.0f,   0.0f,   0.0f },
+        {  24.7f,   8.0f,  24.7f },
+        {   0.0f,  15.0f,  35.0f },
+        { -24.7f,   8.0f,  24.7f },
+        { -35.0f,   0.0f,   0.0f },
+
+        { -24.7f,  -8.0f, -24.7f },
+        {   0.0f, -15.0f, -35.0f },
+        {  24.7f,  -8.0f, -24.7f },
+
+        {  17.5f,  20.0f,  30.3f },
+        { -17.5f, -20.0f, -30.3f }
+    };
+    // clang-format on
+
     oriongl::graphics::MaterialData boxMaterial{
         "assets/container.png",
         "assets/container_specular.png",
         "assets/black_pixel.png",
     };
 
-    auto cube = std::make_unique<graphics::Model>(oriongl::core::getCubeData(), oriongl::core::getProgram(vertex_shader, frag_shader, {}),
+    auto cube = std::make_unique<graphics::Model>(oriongl::core::getCubeData(3.0f), oriongl::core::getProgram(vertex_shader, frag_shader, {}),
                                                   oriongl::core::getMaterial(boxMaterial));
 
-    cube->setRotate(17.0f, {1.0f, 1.0f, 0.0f});
     data.emplace_back(std::move(cube));
-    data.back().addInstance(std::move(std::make_shared<glm::vec3>(25.0f)));
-    data.back().addInstance(std::move(std::make_shared<glm::vec3>(-40.0f)));
+    for (auto &position : cubePositions) {
+        data.back().addInstance(graphics::ModelData{ position });
+    }
 
-    auto light =
-        std::make_unique<graphics::Model>(oriongl::core::getCubeData(), oriongl::core::getProgram(vertex_shader, frag_light_shader, {}));
+    auto light = std::make_unique<graphics::Model>(oriongl::core::getCubeData(5.0f), oriongl::core::getProgram(vertex_shader, frag_light_shader, {}));
 
     data.emplace_back(std::move(light));
-    data.back().addInstance(std::move(std::make_shared<glm::vec3>(0.0f)));
+    data.back().addInstance(graphics::ModelData{ glm::vec3(0.0f) });
 };
 
 } // namespace oriongl::samples::boxes

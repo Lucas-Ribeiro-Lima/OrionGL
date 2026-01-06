@@ -56,19 +56,19 @@ void Model::saveBuffer() {
 
 // Set a new translation transformation vetor for the object.
 Model &Model::setTranslate(glm::vec3 axis) {
-    translateAxis = axis;
+    data.position = axis;
     return *this;
 }
 
 Model &Model::setRotate(float deg, glm::vec3 axis) {
-    rotateDeg = deg;
-    rotateAxis = axis;
+    data.rotate_deg = deg;
+    data.rotate_axis = axis;
     return *this;
 }
 
 // Set a new scaling transformation vetor for the object.
 Model &Model::setScale(glm::vec3 axis) {
-    scaleAxis = axis;
+    data.scale_axis = axis;
     return *this;
 }
 
@@ -83,7 +83,7 @@ void Model::draw() {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
-    (*program).resetT().translate(translateAxis).rotate(rotateDeg, rotateAxis).scale(scaleAxis).use();
+    (*program).resetT().translate(data.position).rotate(data.rotate_deg, data.rotate_axis).scale(data.scale_axis).use();
 
     if (material)
         material->bindMaterial();

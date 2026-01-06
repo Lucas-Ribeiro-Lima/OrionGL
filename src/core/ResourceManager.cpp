@@ -39,44 +39,44 @@ Camera &getCamera() {
     return cam;
 };
 
-std::shared_ptr<graphics::Mesh> getCubeData() {
+std::shared_ptr<graphics::Mesh> getCubeData(float side_size) {
     // clang-format off
     static graphics::vertex_array vertexesCube = {
         // ===== Front (+Z)
-        -6.0f, -5.0f,  5.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,
-         4.0f, -5.0f,  5.0f,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,
-         4.0f,  5.0f,  5.0f,   0.0f, 0.0f, 1.0f,   1.0f, 1.0f,
-        -6.0f,  5.0f,  5.0f,   0.0f, 0.0f, 1.0f,   0.0f, 1.0f,
+        -side_size, -side_size,  side_size,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,
+         side_size, -side_size,  side_size,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,
+         side_size,  side_size,  side_size,   0.0f, 0.0f, 1.0f,   1.0f, 1.0f,
+        -side_size,  side_size,  side_size,   0.0f, 0.0f, 1.0f,   0.0f, 1.0f,
 
         // ===== Back (-Z)
-         4.0f, -5.0f, -5.0f,   0.0f, 0.0f,-1.0f,   0.0f, 0.0f,
-        -6.0f, -5.0f, -5.0f,   0.0f, 0.0f,-1.0f,   1.0f, 0.0f,
-        -6.0f,  5.0f, -5.0f,   0.0f, 0.0f,-1.0f,   1.0f, 1.0f,
-         4.0f,  5.0f, -5.0f,   0.0f, 0.0f,-1.0f,   0.0f, 1.0f,
+         side_size, -side_size, -side_size,   0.0f, 0.0f,-1.0f,   0.0f, 0.0f,
+        -side_size, -side_size, -side_size,   0.0f, 0.0f,-1.0f,   1.0f, 0.0f,
+        -side_size,  side_size, -side_size,   0.0f, 0.0f,-1.0f,   1.0f, 1.0f,
+         side_size,  side_size, -side_size,   0.0f, 0.0f,-1.0f,   0.0f, 1.0f,
 
         // ===== Left (-X)
-        -6.0f, -5.0f, -5.0f,  -1.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-        -6.0f, -5.0f,  5.0f,  -1.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-        -6.0f,  5.0f,  5.0f,  -1.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-        -6.0f,  5.0f, -5.0f,  -1.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+        -side_size, -side_size, -side_size,  -1.0f, 0.0f, 0.0f,   0.0f, 0.0f,
+        -side_size, -side_size,  side_size,  -1.0f, 0.0f, 0.0f,   1.0f, 0.0f,
+        -side_size,  side_size,  side_size,  -1.0f, 0.0f, 0.0f,   1.0f, 1.0f,
+        -side_size,  side_size, -side_size,  -1.0f, 0.0f, 0.0f,   0.0f, 1.0f,
 
         // ===== Right (+X)
-         4.0f, -5.0f,  5.0f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-         4.0f, -5.0f, -5.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-         4.0f,  5.0f, -5.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-         4.0f,  5.0f,  5.0f,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+         side_size, -side_size,  side_size,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f,
+         side_size, -side_size, -side_size,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f,
+         side_size,  side_size, -side_size,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,
+         side_size,  side_size,  side_size,   1.0f, 0.0f, 0.0f,   0.0f, 1.0f,
 
         // ===== Top (+Y)
-        -6.0f,  5.0f,  5.0f,   0.0f, 1.0f, 0.0f,   0.0f, 0.0f,
-         4.0f,  5.0f,  5.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,
-         4.0f,  5.0f, -5.0f,   0.0f, 1.0f, 0.0f,   1.0f, 1.0f,
-        -6.0f,  5.0f, -5.0f,   0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
+        -side_size,  side_size,  side_size,   0.0f, 1.0f, 0.0f,   0.0f, 0.0f,
+         side_size,  side_size,  side_size,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,
+         side_size,  side_size, -side_size,   0.0f, 1.0f, 0.0f,   1.0f, 1.0f,
+        -side_size,  side_size, -side_size,   0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
 
         // ===== Bottom (-Y)
-        -6.0f, -5.0f, -5.0f,   0.0f,-1.0f, 0.0f,   0.0f, 0.0f,
-         4.0f, -5.0f, -5.0f,   0.0f,-1.0f, 0.0f,   1.0f, 0.0f,
-         4.0f, -5.0f,  5.0f,   0.0f,-1.0f, 0.0f,   1.0f, 1.0f,
-        -6.0f, -5.0f,  5.0f,   0.0f,-1.0f, 0.0f,   0.0f, 1.0f
+        -side_size, -side_size, -side_size,   0.0f,-1.0f, 0.0f,   0.0f, 0.0f,
+         side_size, -side_size, -side_size,   0.0f,-1.0f, 0.0f,   1.0f, 0.0f,
+         side_size, -side_size,  side_size,   0.0f,-1.0f, 0.0f,   1.0f, 1.0f,
+        -side_size, -side_size,  side_size,   0.0f,-1.0f, 0.0f,   0.0f, 1.0f
     };
 
     static graphics::indexes_array indexesCube = {
