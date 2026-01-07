@@ -5,15 +5,7 @@
 #include <sstream>
 
 namespace oriongl::graphics {
-Shader::Shader(ShaderType type, const std::string &src_path, const std::vector<std::string> &defines)
-    : ID(glCreateShader(type)), shaderType(type), defines(defines) {
-    shaderSource = utils::readFile(src_path);
-    injectDefines();
-    compileShader();
-    errors();
-}
-
-Shader::Shader(ShaderType type, const char *src_raw, const std::vector<std::string> &defines)
+Shader::Shader(ShaderType type, std::string src_raw, const std::vector<std::string> &defines)
     : ID(glCreateShader(type)), shaderSource(src_raw), shaderType(type), defines(defines) {
     injectDefines();
     compileShader();

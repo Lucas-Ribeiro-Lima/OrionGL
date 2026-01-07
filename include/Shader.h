@@ -25,8 +25,7 @@ class Shader {
     int success = 0;
 
   public:
-    Shader(ShaderType type, const std::string &src_path, const std::vector<std::string> &defines);
-    Shader(ShaderType type, const char *src_raw, const std::vector<std::string> &defines);
+    Shader(ShaderType type, std::string src_raw, const std::vector<std::string> &defines);
     ~Shader();
     void injectDefines();
     void compileShader() const;

@@ -169,23 +169,6 @@ std::shared_ptr<graphics::Texture> getTextureData(std::string tex) {
 std::shared_ptr<graphics::Program> getProgram(std::string vertex_src_path, std::string frag_src_path,
                                               std::vector<std::string> defines) {
     static cache_map<std::string, graphics::Program> progMap;
-
-    std::string key = concatenateHashKeys(vertex_src_path, frag_src_path, defines.data());
-
-    graphics::Shader vertex_shader{graphics::ShaderType::VERTEX, vertex_src_path, defines};
-
-    graphics::Shader fragment_shader{graphics::ShaderType::FRAGMENT, frag_src_path, defines};
-
-    auto ptr = tryToLockSmartPointer<std::string, graphics::Program>(key, progMap);
-    if (ptr)
-        return ptr;
-
-    return instanciateAndCache(key, progMap, std::move(vertex_shader), std::move(fragment_shader));
-}
-
-std::shared_ptr<graphics::Program> getProgram(const char *vertex_src_path, const char *frag_src_path,
-                                              std::vector<std::string> defines) {
-    static cache_map<std::string, graphics::Program> progMap;
     std::string key = concatenateHashKeys(vertex_src_path, frag_src_path, defines.data());
 
     graphics::Shader vertex_shader{graphics::ShaderType::VERTEX, vertex_src_path, defines};
