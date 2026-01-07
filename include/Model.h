@@ -17,28 +17,20 @@ typedef model_vector ModelRotateAxis;
 typedef float ModelRotateDeg;
 
 struct ModelData {
-  ModelPosition position{ 0.0f };
-  ModelScaleAxis scale_axis{ 1.0f };
-  ModelRotateAxis rotate_axis{ 1.0f };
-  ModelRotateDeg rotate_deg{ 0.0f };
+    ModelPosition position{0.0f};
+    ModelScaleAxis scale_axis{1.0f};
+    ModelRotateAxis rotate_axis{1.0f};
+    ModelRotateDeg rotate_deg{0.0f};
 };
 
-struct VertexData {
-    float position[3];
-    float normal[3];
-    float text_coords[2];
-};
 
 class Model {
   protected:
     ModelData data{};
 
-    std::shared_ptr<Mesh> mesh = nullptr;
+    std::vector<std::shared_ptr<Mesh>> meshes;
+    std::vector<std::shared_ptr<Material>> materials;
     std::shared_ptr<Program> program = nullptr;
-    std::shared_ptr<Material> material = nullptr;
-
-    uint VAO = 0;
-    bool wireframe = false;
 
     void saveBuffer();
 
@@ -55,8 +47,6 @@ class Model {
 
     virtual ~Model() = default;
 
-    uint getID() const;
-
     Model &setProgram(std::shared_ptr<Program> prg);
 
     Model &setTranslate(glm::vec3 axis);
@@ -64,8 +54,6 @@ class Model {
     Model &setRotate(float deg, glm::vec3 axis);
 
     Model &setScale(glm::vec3 axis);
-
-    void setWireframe(bool state);
 
     virtual void draw();
 };

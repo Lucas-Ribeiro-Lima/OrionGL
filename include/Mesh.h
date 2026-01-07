@@ -2,30 +2,33 @@
 #include <vector>
 
 namespace oriongl::graphics {
-    using uint = unsigned int;
 
-    typedef std::vector<float> vertex_array;
-    typedef std::vector<uint> indexes_array;
+typedef std::vector<float> vertex_array;
+typedef std::vector<uint> indexes_array;
 
-    class Mesh {
-        unsigned int vertexesSize = 0;
-        unsigned int indexesSize = 0;
-        uint VBO = 0;
-        uint EBO = 0;
+struct Vertex {
+    float position[3];
+    float normal[3];
+    float text_coords[2];
+};
 
-    public:
-        Mesh(vertex_array &vertexes, indexes_array &indexes);
+class Mesh {
+    unsigned int vertexesSize = 0;
+    unsigned int indexesSize = 0;
+    unsigned int VAO = 0;
+    unsigned int VBO = 0;
+    unsigned int EBO = 0;
 
-        uint getVBO() const;
+    void genVertexArrayBuffer();
+    void genVertexBufferObject(const vertex_array &vertexes);
+    void genElementBufferObject(const indexes_array &indexes);
+    void bindBuffer();
 
-        uint getEBO() const;
+    unsigned int getVertexSize() const;
+  public:
+    Mesh(vertex_array &vertexes, indexes_array &indexes);
 
-        unsigned int getVertexSize() const;
-
-        unsigned int getIndexSize() const;
-
-        void genVertexBufferObject(const vertex_array &vertexes);
-
-        void genElementBufferObject(const indexes_array &indexes);
-    };
-}
+    unsigned int getVAO() const;
+    unsigned int getIndexSize() const;
+};
+} // namespace oriongl::graphics

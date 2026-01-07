@@ -3,55 +3,20 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program) : mesh(std::move(mesh)), program(std::move(program)) {
-    genVertexArrayBuffer();
-
-    bindGeometry();
-
-    saveBuffer();
+Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program) : program(std::move(program)) {
+    meshes.push_back(std::move(mesh));
+    materials.push_back(nullptr);
 }
 
 Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program, std::shared_ptr<Material> material)
-    : mesh(std::move(mesh)), program(std::move(program)), material(std::move(material)) {
-    genVertexArrayBuffer();
-
-    bindGeometry();
-    bindTexture();
-
-    saveBuffer();
+    : program(std::move(program)) {
+    meshes.push_back(std::move(mesh));
+    materials.push_back(std::move(material));
 }
-
-void Model::genVertexArrayBuffer() {
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-}
-
-void Model::bindGeometry() const {
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->getVBO());
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getEBO());
-}
-
-void Model::bindTexture() const { material->bindMaterial(); }
 
 Model &Model::setProgram(std::shared_ptr<Program> prg) {
     program = prg;
     return *this;
-}
-
-void Model::saveBuffer() {
-    static_assert(sizeof(VertexData) == 32);
-    static_assert(sizeof(VertexData::position) == 12);
-    static_assert(sizeof(VertexData::normal) == 12);
-    static_assert(sizeof(VertexData::text_coords) == 8);
-
-    glVertexAttribPointer(0, sizeof(VertexData::position) / sizeof(float), GL_FLOAT, GL_FALSE, sizeof(VertexData), (void *)0);
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, sizeof(VertexData::normal) / sizeof(float), GL_FLOAT, GL_FALSE, sizeof(VertexData), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(2, sizeof(VertexData::text_coords) / sizeof(float), GL_FLOAT, GL_FALSE, sizeof(VertexData), (void *)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 }
 
 // Set a new translation transformation vetor for the object.
@@ -77,23 +42,17 @@ Model &Model::setScale(glm::vec3 axis) {
     applying the transformations of the object.
 */
 void Model::draw() {
-    if (wireframe) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    } else {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
-
     (*program).resetT().translate(data.position).rotate(data.rotate_deg, data.rotate_axis).scale(data.scale_axis).use();
 
-    if (material)
-        material->bindMaterial();
+    for (size_t i = 0; i < meshes.size(); i++) {
+        glBindVertexArray(meshes[i]->getVAO());
 
-    glBindVertexArray(VAO);
+        if (materials[i])
+            materials[i]->bindMaterial();
 
-    glDrawElements(GL_TRIANGLES, mesh->getIndexSize(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, meshes[i]->getIndexSize(), GL_UNSIGNED_INT, 0);
+
+        glBindVertexArray(0);
+    }
 }
-
-void Model::setWireframe(bool state) { wireframe = state; }
-
-GLuint Model::getID() const { return VAO; }
 } // namespace oriongl::graphics

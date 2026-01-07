@@ -18,7 +18,6 @@ namespace oriongl::graphics {
         unsigned char *data = stbi_load(path.c_str(), &width, &heigth, &nrChannels, 0);
 
         glGenTextures(1, &TEX);
-        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, TEX);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

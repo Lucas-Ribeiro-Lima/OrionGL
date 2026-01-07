@@ -118,7 +118,7 @@ BoxesRenderer::BoxesRenderer() {
         data.back().addInstance(graphics::ModelData{ position });
     }
 
-    auto light = std::make_unique<graphics::Model>(oriongl::core::getCubeData(5.0f), oriongl::core::getProgram(vertex_shader, frag_light_shader, {}));
+    auto light = std::make_unique<graphics::Model>(oriongl::core::getSphereData(5.0f), oriongl::core::getProgram(vertex_shader, frag_light_shader, {}));
 
     data.emplace_back(std::move(light));
     data.back().addInstance(graphics::ModelData{ glm::vec3(0.0f) });
