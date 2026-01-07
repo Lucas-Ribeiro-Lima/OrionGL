@@ -104,24 +104,25 @@ BoxesRenderer::BoxesRenderer() {
     };
     // clang-format on
 
-    oriongl::graphics::MaterialData boxMaterial{
+    std::vector<std::string> boxMaterial{
         "assets/container.png",
         "assets/container_specular.png",
         "assets/black_pixel.png",
     };
 
-    auto cube = std::make_unique<graphics::Model>(oriongl::core::getCubeData(3.0f), oriongl::core::getProgram(vertex_shader, frag_shader, {}),
-                                                  oriongl::core::getMaterial(boxMaterial));
+    auto cube = std::make_unique<graphics::Model>(oriongl::core::getProgram(vertex_shader, frag_shader, {}));
+    cube->loadData(oriongl::core::getCubeData(3.0f), oriongl::core::getMaterial(boxMaterial));
 
     data.emplace_back(std::move(cube));
     for (auto &position : cubePositions) {
-        data.back().addInstance(graphics::ModelData{ position });
+        data.back().addInstance(graphics::ModelData{position});
     }
 
-    auto light = std::make_unique<graphics::Model>(oriongl::core::getSphereData(5.0f), oriongl::core::getProgram(vertex_shader, frag_light_shader, {}));
+    auto light = std::make_unique<graphics::Model>(oriongl::core::getProgram(vertex_shader, frag_light_shader, {}));
+    light->loadData(oriongl::core::getSphereData(5.0f));
 
     data.emplace_back(std::move(light));
-    data.back().addInstance(graphics::ModelData{ glm::vec3(0.0f) });
+    data.back().addInstance(graphics::ModelData{glm::vec3(0.0f)});
 };
 
 } // namespace oriongl::samples::boxes

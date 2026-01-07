@@ -2,23 +2,25 @@
 // Created by lucas.lima on 12/09/2025.
 //
 
+#include "ResourceManager.h"
 #include <Material.h>
 #include <glad.h>
-#include "ResourceManager.h"
 
 namespace oriongl::graphics {
-    Material::Material(MaterialData &mat) : m_data(std::move(mat)) {
-        diffuse = core::getTextureData(m_data.diffusePath);
-        specular = core::getTextureData(m_data.specularPath);
-        emissive = core::getTextureData(m_data.emissivePath);
-    };
+#define MAX_TEXTURES 8
 
-    void Material::bindMaterial() {
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, diffuse->getTex());
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, specular->getTex());
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, emissive->getTex());
+Material::Material() {};
+
+void Material::loadTexture(std::string &path) { 
+  assert(textures.size() < MAX_TEXTURES && "Exceeded maximum number of textures per material");
+  textures.push_back(oriongl::core::getTextureData(path)); 
+}
+
+void Material::bindMaterial() {
+    size_t number = 0;
+    for (auto &texture : textures) {
+        glActiveTexture(GL_TEXTURE0 + number++);
+        glBindTexture(GL_TEXTURE_2D, texture->getTex());
     }
 }
+} // namespace oriongl::graphics

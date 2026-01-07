@@ -23,7 +23,6 @@ struct ModelData {
     ModelRotateDeg rotate_deg{0.0f};
 };
 
-
 class Model {
   protected:
     ModelData data{};
@@ -41,11 +40,14 @@ class Model {
     void bindTexture() const;
 
   public:
-    Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program);
-
-    Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program, std::shared_ptr<Material> material);
+    Model(std::shared_ptr<Program> program);
 
     virtual ~Model() = default;
+
+    void loadData(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material = nullptr);
+    void deleteData(size_t index);
+
+    std::shared_ptr<Program> getModelProgram() const;
 
     Model &setProgram(std::shared_ptr<Program> prg);
 

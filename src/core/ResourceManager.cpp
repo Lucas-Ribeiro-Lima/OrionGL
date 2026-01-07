@@ -166,7 +166,8 @@ std::shared_ptr<graphics::Texture> getTextureData(std::string tex) {
     return instanciateAndCache(tex, texMap, tex);
 }
 
-std::shared_ptr<graphics::Program> getProgram(std::string vertex_src_path, std::string frag_src_path, std::vector<std::string> defines) {
+std::shared_ptr<graphics::Program> getProgram(std::string vertex_src_path, std::string frag_src_path,
+                                              std::vector<std::string> defines) {
     static cache_map<std::string, graphics::Program> progMap;
 
     std::string key = concatenateHashKeys(vertex_src_path, frag_src_path, defines.data());
@@ -182,7 +183,8 @@ std::shared_ptr<graphics::Program> getProgram(std::string vertex_src_path, std::
     return instanciateAndCache(key, progMap, std::move(vertex_shader), std::move(fragment_shader));
 }
 
-std::shared_ptr<graphics::Program> getProgram(const char *vertex_src_path, const char *frag_src_path, std::vector<std::string> defines) {
+std::shared_ptr<graphics::Program> getProgram(const char *vertex_src_path, const char *frag_src_path,
+                                              std::vector<std::string> defines) {
     static cache_map<std::string, graphics::Program> progMap;
     std::string key = concatenateHashKeys(vertex_src_path, frag_src_path, defines.data());
 
@@ -197,13 +199,11 @@ std::shared_ptr<graphics::Program> getProgram(const char *vertex_src_path, const
     return instanciateAndCache(key, progMap, std::move(vertex_shader), std::move(fragment_shader));
 }
 
-std::shared_ptr<graphics::Material> getMaterial(graphics::MaterialData &mat) {
-    static cache_map<std::string, graphics::Material> matMap;
-    std::string key = concatenateHashKeys(mat.diffusePath.c_str(), mat.specularPath.c_str(), mat.emissivePath.c_str());
-    auto ptr = tryToLockSmartPointer<std::string, graphics::Material>(key, matMap);
-    if (ptr)
-        return ptr;
-
-    return instanciateAndCache(key, matMap, mat);
+std::shared_ptr<graphics::Material> getMaterial(std::vector<std::string> &textures) {
+    oriongl::graphics::Material material;
+    for (auto &texture_path : textures) {
+        material.loadTexture(texture_path);
+    }
+    return std::make_shared<oriongl::graphics::Material>(material);
 }
 } // namespace oriongl::core

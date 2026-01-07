@@ -3,20 +3,18 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program) : program(std::move(program)) {
-    meshes.push_back(std::move(mesh));
-    materials.push_back(nullptr);
-}
-
-Model::Model(std::shared_ptr<Mesh> mesh, std::shared_ptr<Program> program, std::shared_ptr<Material> material)
-    : program(std::move(program)) {
-    meshes.push_back(std::move(mesh));
-    materials.push_back(std::move(material));
-}
+Model::Model(std::shared_ptr<Program> program) : program(std::move(program)) {}
 
 Model &Model::setProgram(std::shared_ptr<Program> prg) {
     program = prg;
     return *this;
+}
+
+std::shared_ptr<Program> Model::getModelProgram() const { return program; }
+
+void Model::loadData(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material) {
+    meshes.push_back(std::move(mesh));
+    materials.push_back(std::move(material));
 }
 
 // Set a new translation transformation vetor for the object.

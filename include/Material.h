@@ -8,24 +8,16 @@
 #include "Texture.h"
 
 #include <memory>
+#include <vector>
 #include <string>
 
 namespace oriongl::graphics {
-    struct MaterialData {
-        std::string diffusePath;
-        std::string specularPath;
-        std::string emissivePath;
-    };
-
     class Material {
-        std::shared_ptr<Texture> diffuse;
-        std::shared_ptr<Texture> specular;
-        std::shared_ptr<Texture> emissive;
-        MaterialData m_data;
-        float shininess = 1.0f;
+        std::vector<std::shared_ptr<Texture>> textures;
 
     public:
-        Material(MaterialData &mat);
+        Material();
+        void loadTexture(std::string &path);
         void bindMaterial();
     };
 }
