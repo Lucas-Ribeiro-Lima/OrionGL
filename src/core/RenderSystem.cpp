@@ -3,7 +3,7 @@
 //
 
 #include <RenderSystem.h>
-#include <ResourceManager.h>
+#include <glad.h>
 
 namespace oriongl::core {
 RenderSystem::RenderSystem() {}
@@ -15,8 +15,7 @@ void RenderSystem::render(Scene &scene) {
     auto &lights = scene.lights;
     auto &camera = scene.camera;
 
-    for (auto &actor : scene.data) {
-        actor.drawInstances();
+    for (auto &entitie : scene.data) {
     }
 }
 } // namespace oriongl::core

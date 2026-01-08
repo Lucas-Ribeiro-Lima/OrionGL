@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Camera.h>
 #include <Instances.h>
 
