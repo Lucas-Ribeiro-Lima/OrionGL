@@ -6,14 +6,17 @@
 #include <ResourceManager.h>
 
 namespace oriongl::core {
-    RenderSystem::RenderSystem() {}
+RenderSystem::RenderSystem() {}
 
-    void RenderSystem::render(Scene &scene) {
-      auto& lights = scene.lights;
-      auto& camera = scene.camera;
+void RenderSystem::render(Scene &scene) {
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      for(auto& actor : scene.data) {
-          actor.drawInstances(); 
-      }
+    auto &lights = scene.lights;
+    auto &camera = scene.camera;
+
+    for (auto &actor : scene.data) {
+        actor.drawInstances();
     }
 }
+} // namespace oriongl::core

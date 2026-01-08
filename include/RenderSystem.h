@@ -1,10 +1,7 @@
 //
 // Created by lucas.lima on 30/11/2025.
 //
-
-#ifndef OPENGL_LEARNING_SYSTEM_H
-#define OPENGL_LEARNING_SYSTEM_H
-
+#pragma once
 #include <Scene.h>
 
 namespace oriongl::core {
@@ -15,4 +12,3 @@ class RenderSystem {
   };
 } // namespace oriongl::core
 
-#endif // OPENGL_LEARNING_SYSTEM_H
