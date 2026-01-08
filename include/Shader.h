@@ -1,13 +1,16 @@
 #pragma once
 
-#include <glad.h>
 #include <string>
 #include <vector>
 
 namespace oriongl::graphics {
+
+#define VERTEX_SHADER 0x8b31
+#define FRAGMENT_SHADER 0x8b30
+
 enum ShaderType {
-    VERTEX = GL_VERTEX_SHADER,
-    FRAGMENT = GL_FRAGMENT_SHADER,
+    VERTEX = VERTEX_SHADER,
+    FRAGMENT = FRAGMENT_SHADER,
 };
 
 struct ShadersSrc {
