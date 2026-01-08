@@ -5,34 +5,19 @@
 namespace oriongl::graphics {
 Model::Model(std::shared_ptr<Program> program) : program(std::move(program)) {}
 
-Model &Model::setProgram(std::shared_ptr<Program> prg) {
-    program = prg;
-    return *this;
-}
-
 std::shared_ptr<Program> Model::getModelProgram() const { return program; }
+
+void Model::setProgram(std::shared_ptr<Program> prg) { program = prg; }
 
 void Model::loadData(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material) {
     meshes.push_back(std::move(mesh));
     materials.push_back(std::move(material));
 }
 
-// Set a new translation transformation vetor for the object.
-Model &Model::setTranslate(glm::vec3 axis) {
-    data.position = axis;
-    return *this;
-}
-
-Model &Model::setRotate(float deg, glm::vec3 axis) {
-    data.rotate_deg = deg;
-    data.rotate_axis = axis;
-    return *this;
-}
-
-// Set a new scaling transformation vetor for the object.
-Model &Model::setScale(glm::vec3 axis) {
-    data.scale_axis = axis;
-    return *this;
+void Model::deleteData(size_t index) {
+    assert(index < meshes.size() && "Index out of bounds in Model::deleteData");
+    meshes.erase(meshes.begin() + index);
+    materials.erase(materials.begin() + index);
 }
 
 /*
@@ -40,8 +25,6 @@ Model &Model::setScale(glm::vec3 axis) {
     applying the transformations of the object.
 */
 void Model::draw() {
-    (*program).resetT().translate(data.position).rotate(data.rotate_deg, data.rotate_axis).scale(data.scale_axis).use();
-
     for (size_t i = 0; i < meshes.size(); i++) {
         glBindVertexArray(meshes[i]->getVAO());
 
