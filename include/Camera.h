@@ -36,11 +36,11 @@ namespace oriongl::core {
     public:
         Camera();
 
-        glm::mat4 getView();
+        glm::mat4 &getView();
 
-        glm::mat4 getPerspective();
+        glm::mat4 &getPerspective();
 
-        glm::vec3 getViewPosition();
+        glm::vec3 &getViewPosition();
 
         void updateView();
 

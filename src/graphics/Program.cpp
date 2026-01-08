@@ -1,5 +1,4 @@
 #include "Program.h"
-#include "ResourceManager.h"
 #include "Shader.h"
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -9,7 +8,7 @@
 #include <glad.h>
 
 namespace oriongl::graphics {
-Program::Program(Shader &&vertex, Shader &&fragment) : cam(core::getCamera()) {
+Program::Program(Shader &&vertex, Shader &&fragment) {
     ID = glCreateProgram();
     glAttachShader(ID, vertex.getId());
     glAttachShader(ID, fragment.getId());
@@ -34,19 +33,9 @@ void Program::errors() {
     }
 }
 
-void Program::use() {
-    view = cam.getView();
-    viewPos = cam.getViewPosition();
-    projection = cam.getPerspective();
+void Program::use() { glUseProgram(ID); }
 
-    glUseProgram(ID);
-    setCommonUniforms();
-}
-
-Program &Program::resetT() {
-    model = glm::mat4(1.0f);
-    return *this;
-}
+void Program::resetModel() { model = glm::mat4(1.0f); }
 
 Program &Program::scale(glm::vec3 scaleProps) {
     model = glm::scale(model, scaleProps);
@@ -63,19 +52,22 @@ Program &Program::translate(glm::vec3 translateProps) {
     return *this;
 }
 
-void Program::setCommonUniforms() {
-    // Transformations
-    setUniform4fv("model", model);
-    setUniform4fv("view", view);
-    setUniform4fv("projection", projection);
-    setUniform3fv("viewPos", viewPos);
+void Program::setCamera(core::Camera &camera) {
+    setUniform4fv("view", camera.getView());
+    setUniform3fv("viewPos", camera.getViewPosition());
+    setUniform4fv("projection", camera.getPerspective());
+}
 
-    // Light position
+void Program::setLight(Light &light) {
     setUniform3fv("light.position", light.position);
     setUniform3fv("light.ambient", light.ambient);
     setUniform3fv("light.diffuse", light.diffuse);
     setUniform3fv("light.specular", light.specular);
+}
 
+void Program::setModel() { setUniform4fv("model", model); }
+
+void Program::setTextures() {
     // Texture
     setUniform1i("material.diffuse", 0);
     setUniform1i("material.specular", 1);
@@ -87,7 +79,9 @@ void Program::setUniform1I(const char name[], GLint value) const { glUniform1i(g
 
 void Program::setUniform1f(const char name[], GLfloat value) const { glUniform1f(glGetUniformLocation(ID, name), value); }
 
-void Program::setUniform3fv(const char name[], glm::vec3 &vec) { glUniform3fv(glGetUniformLocation(ID, name), 1, glm::value_ptr(vec)); }
+void Program::setUniform3fv(const char name[], glm::vec3 &vec) {
+    glUniform3fv(glGetUniformLocation(ID, name), 1, glm::value_ptr(vec));
+}
 
 void Program::setUniform4fv(const char name[], glm::mat4 &mat) {
     glUniformMatrix4fv(glGetUniformLocation(ID, name), 1, GL_FALSE, glm::value_ptr(mat));
