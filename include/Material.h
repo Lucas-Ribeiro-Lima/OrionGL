@@ -17,7 +17,7 @@ namespace oriongl::graphics {
 
     public:
         Material();
-        void loadTexture(std::string &path);
+        void loadTexture(std::shared_ptr<Texture> texture);
         void bindMaterial();
     };
 }

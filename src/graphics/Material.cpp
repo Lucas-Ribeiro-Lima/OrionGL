@@ -2,8 +2,8 @@
 // Created by lucas.lima on 12/09/2025.
 //
 
-#include "ResourceManager.h"
 #include <Material.h>
+#include <cassert>
 #include <glad.h>
 
 namespace oriongl::graphics {
@@ -11,9 +11,9 @@ namespace oriongl::graphics {
 
 Material::Material() {};
 
-void Material::loadTexture(std::string &path) { 
+void Material::loadTexture(std::shared_ptr<oriongl::graphics::Texture> texture) { 
   assert(textures.size() < MAX_TEXTURES && "Exceeded maximum number of textures per material");
-  textures.push_back(oriongl::core::getTextureData(path)); 
+  textures.push_back(std::move(texture)); 
 }
 
 void Material::bindMaterial() {
