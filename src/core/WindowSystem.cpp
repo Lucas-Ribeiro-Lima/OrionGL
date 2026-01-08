@@ -1,6 +1,6 @@
 #include <WindowSystem.h>
-#include <glad.h>
 #include <stdexcept>
+
 
 namespace oriongl::core {
 WindowSystem::WindowSystem(const char *title) : WindowSystem() { this->window_title = title; }
