@@ -1,12 +1,19 @@
-#include "ResourceManager.h"
+#include <ResourceManagers.h>
 
-#include <concepts>
+#include <memory>
 #include <sstream>
-#include <unordered_map>
-#include <vector>
 
-namespace oriongl::core {
-template <typename key, typename value> using cache_map = std::unordered_map<key, std::weak_ptr<value>>;
+namespace {
+template <typename Key, typename Value> using cache_map = std::unordered_map<Key, std::weak_ptr<Value>>;
+
+cache_map<std::string, oriongl::graphics::Program> shaderMap;
+cache_map<std::string, oriongl::graphics::Mesh> meshMap;
+cache_map<std::string, oriongl::graphics::Texture> textureMap;
+cache_map<unsigned int, oriongl::graphics::Model> modelMap;
+
+} // namespace
+
+namespace oriongl::core::storage {
 
 template <typename Key, typename Value> std::shared_ptr<Value> tryToLockSmartPointer(Key &key, cache_map<Key, Value> &map) {
     auto it = map.find(key);
@@ -18,7 +25,7 @@ template <typename Key, typename Value> std::shared_ptr<Value> tryToLockSmartPoi
 
 template <typename Key, typename Value, typename... Args>
 std::shared_ptr<Value> instanciateAndCache(Key &key, cache_map<Key, Value> &map, Args &&...args) {
-    std::shared_ptr<Value> _ptr = std::make_shared<Value>(std::forward<Args>(args)...);
+    auto _ptr = std::make_shared<Value>(std::forward<Args>(args)...);
     map[key] = _ptr;
     return _ptr;
 }
@@ -34,12 +41,54 @@ template <streameable... Args> std::string concatenateHashKeys(Args &&...args) {
     return ss.str();
 };
 
-Camera &getCamera() {
-    static Camera cam{};
-    return cam;
+std::shared_ptr<graphics::Program> ShaderManager::getProgram(std::string vertex_src, std::string frag_src,
+                                                             std::vector<std::string> defines) {
+    std::string key = concatenateHashKeys(vertex_src, frag_src, defines.data());
+
+    auto ptr = tryToLockSmartPointer<std::string, graphics::Program>(key, shaderMap);
+    if (ptr)
+        return ptr;
+
+    graphics::Shader vertex_shader{graphics::ShaderType::VERTEX, vertex_src, defines};
+    graphics::Shader fragment_shader{graphics::ShaderType::FRAGMENT, frag_src, defines};
+
+    return instanciateAndCache(key, shaderMap, std::move(vertex_shader), std::move(fragment_shader));
 };
 
-std::shared_ptr<graphics::Mesh> getCubeData(float side_size) {
+std::shared_ptr<graphics::Mesh> MeshManager::getMesh(std::string mesh_path) {
+    // TO DO
+    return nullptr;
+};
+
+std::shared_ptr<graphics::Texture> TextureManager::getTexture(std::string tex_path) {
+    auto ptr = tryToLockSmartPointer<std::string, graphics::Texture>(tex_path, textureMap);
+
+    if (ptr)
+        return ptr;
+
+    return instanciateAndCache(tex_path, textureMap, tex_path);
+};
+
+graphics::Material loadMaterialHelper(std::vector<std::string> &textures) {
+    graphics::Material material;
+    for (auto &texture : textures) {
+        material.loadTexture(TextureManager::getTexture(texture));
+    }
+    return material;
+};
+
+std::shared_ptr<graphics::Model> ModelManager::getModel(std::shared_ptr<graphics::Program> shader, std::shared_ptr<graphics::Mesh> mesh,
+                                     std::vector<std::string> textures) {
+
+    auto material = loadMaterialHelper(textures);
+    auto model = std::make_shared<oriongl::graphics::Model>(shader);
+    model->loadData(mesh, std::make_shared<graphics::Material>(material));
+
+    return model;
+};
+
+
+std::shared_ptr<graphics::Mesh> MeshLoaderHelper::getCubeMesh(float side_size) {
     // clang-format off
     static graphics::vertex_array vertexesCube = {
         // ===== Front (+Z)
@@ -91,16 +140,6 @@ std::shared_ptr<graphics::Mesh> getCubeData(float side_size) {
 
     static auto ptr = std::make_shared<graphics::Mesh>(vertexesCube, indexesCube);
     return ptr;
-}
-
-std::shared_ptr<graphics::Mesh> getSphereData(float radius) {
-    static cache_map<float, graphics::Mesh> radiusMap;
-    auto ptr = tryToLockSmartPointer<float, graphics::Mesh>(radius, radiusMap);
-    if (ptr)
-        return ptr;
-
-    auto data = generateSphereRadiusVector(radius);
-    return instanciateAndCache(radius, radiusMap, data.first, data.second);
 }
 
 constexpr std::pair<graphics::vertex_array, graphics::indexes_array> generateSphereRadiusVector(const float radius) {
@@ -155,38 +194,13 @@ constexpr std::pair<graphics::vertex_array, graphics::indexes_array> generateSph
     return std::pair{vertexesSphere, indexesSphere};
 }
 
-std::shared_ptr<graphics::Texture> getTextureData(std::string tex) {
-    static cache_map<std::string, graphics::Texture> texMap;
-
-    auto ptr = tryToLockSmartPointer<std::string, graphics::Texture>(tex, texMap);
-
+std::shared_ptr<graphics::Mesh> MeshLoaderHelper::getSphereMesh(float radius) {
+    static cache_map<float, graphics::Mesh> radiusMap;
+    auto ptr = tryToLockSmartPointer<float, graphics::Mesh>(radius, radiusMap);
     if (ptr)
         return ptr;
 
-    return instanciateAndCache(tex, texMap, tex);
+    auto data = generateSphereRadiusVector(radius);
+    return instanciateAndCache(radius, radiusMap, data.first, data.second);
 }
-
-std::shared_ptr<graphics::Program> getProgram(std::string vertex_src_path, std::string frag_src_path,
-                                              std::vector<std::string> defines) {
-    static cache_map<std::string, graphics::Program> progMap;
-    std::string key = concatenateHashKeys(vertex_src_path, frag_src_path, defines.data());
-
-    graphics::Shader vertex_shader{graphics::ShaderType::VERTEX, vertex_src_path, defines};
-
-    graphics::Shader fragment_shader{graphics::ShaderType::FRAGMENT, frag_src_path, defines};
-
-    auto ptr = tryToLockSmartPointer<std::string, graphics::Program>(key, progMap);
-    if (ptr)
-        return ptr;
-
-    return instanciateAndCache(key, progMap, std::move(vertex_shader), std::move(fragment_shader));
-}
-
-std::shared_ptr<graphics::Material> getMaterial(std::vector<std::string> &textures) {
-    oriongl::graphics::Material material;
-    for (auto &texture_path : textures) {
-        material.loadTexture(texture_path);
-    }
-    return std::make_shared<oriongl::graphics::Material>(material);
-}
-} // namespace oriongl::core
+} // namespace oriongl::core::storage
