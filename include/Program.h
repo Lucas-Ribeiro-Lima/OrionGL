@@ -23,15 +23,15 @@ class Program {
 
     Program &translate(glm::vec3 translateProps);
 
-    void resetModel();
+    void resetModelMatrix();
+
+    void setModelMatrix();
 
     void setLight(Light &light);
 
     void setCamera(core::Camera &camera);
 
     void setTextures();
-    
-    void setModel();
 
     void setUniform1I(const char name[], int value) const;
 

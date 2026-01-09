@@ -35,7 +35,9 @@ void Program::errors() {
 
 void Program::use() { glUseProgram(ID); }
 
-void Program::resetModel() { model = glm::mat4(1.0f); }
+void Program::resetModelMatrix() { model = glm::mat4(1.0f); }
+
+void Program::setModelMatrix() { setUniform4fv("model", model); }
 
 Program &Program::scale(glm::vec3 scaleProps) {
     model = glm::scale(model, scaleProps);
@@ -64,8 +66,6 @@ void Program::setLight(Light &light) {
     setUniform3fv("light.diffuse", light.diffuse);
     setUniform3fv("light.specular", light.specular);
 }
-
-void Program::setModel() { setUniform4fv("model", model); }
 
 void Program::setTextures() {
     // Texture
