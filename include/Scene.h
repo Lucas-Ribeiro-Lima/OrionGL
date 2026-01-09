@@ -7,7 +7,7 @@ namespace oriongl::core {
 
 struct Scene {
     std::vector<Entity> data;
-    std::vector<graphics::Light> lights;
+    graphics::Light light;
     Camera camera;
 };
 

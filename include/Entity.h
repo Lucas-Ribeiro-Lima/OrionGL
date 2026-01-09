@@ -6,11 +6,10 @@
 #include "Model.h"
 
 namespace oriongl::core {
-typedef std::vector<float[3]> instances_data;
 
 struct Entity {
-    std::unique_ptr<graphics::Model> model;
-    instances_data instances;
-}; // namespace oriongl::core
+    std::shared_ptr<graphics::Model> model;
+    std::vector<glm::vec3> instances;
+};
 
 } // namespace oriongl::core
